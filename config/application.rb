@@ -30,7 +30,7 @@ module FurryAdventureApi
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.eager_load_paths << Rails.root.join("lib")
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
@@ -38,3 +38,4 @@ module FurryAdventureApi
     config.api_only = true
   end
 end
+#Api::V1::UsersControllerTest#test_should_not_update_when_invalid_params_are_sent
