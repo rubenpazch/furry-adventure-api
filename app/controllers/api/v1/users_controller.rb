@@ -34,7 +34,7 @@ class Api::V1::UsersController < ApplicationController
     params.require(:user).permit(:email, :password)
   end
 
-  def set_user 
+  def set_user
     @user = User.find(params[:id])
   end
   

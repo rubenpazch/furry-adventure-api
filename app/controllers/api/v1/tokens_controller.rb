@@ -1,18 +1,27 @@
 class Api::V1::TokensController < ApplicationController
-  def create
-    @user = User.find_by_email(user_params[:email])
-    if @user&.authenticate(user_params[:password])
+  def verify
+    @authorization = get_token(request.headers['Authorization'])
+    @decodedToken = JsonWebToken.decode(@authorization)
+    @user_id = @decodedToken['user_id'] if @decodedToken
+    @user = User.find(@user_id)
+    if @user
       render json: {
-      token: JsonWebToken.encode(user_id: @user.id),
-      email: @user.email
+        token: JsonWebToken.encode(user_id: @user.id),
+        username: @user.email,
+        email: @user.email,
+        first_name: @user.first_name,
+        last_name: @user.last_name,
+        id: @user.id,  
       }
     else
       head :unauthorized
     end
+    rescue JWT::DecodeError
+      head :unauthorized
   end
+  
   private
-    # Only allow a trusted parameter "white list" through.
-  def user_params
-    params.require(:user).permit(:email, :password)
+  def get_token(str)
+    str.split(' ').last
   end
 end
