@@ -3,6 +3,7 @@ require "test_helper"
 class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do 
     @user = users(:one)
+    @userTwo = users(:two)
   end
 
   test "should show user" do 
@@ -66,4 +67,12 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :forbidden
   end
+  
+  test "should return a list of users" do 
+    get api_v1_users_url, as: :json
+    assert_response :success
+    json_response = JSON.parse(self.response.body)
+    assert_equal json_response.first['id'], @userTwo.id
+  end
+
 end

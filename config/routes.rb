@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :create, :update, :destroy]
       #resources :tokens, only: [:verify]
       resources :login, only: [:create]
-      get 'tokens', to: 'tokens#verify' 
+      get 'tokens', to: 'tokens#verify'
+      get 'users', to: 'users#admins'
     end
   end
 end
