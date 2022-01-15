@@ -9,4 +9,12 @@ Rails.application.routes.draw do
       get 'users', to: 'users#admins'
     end
   end
+
+  namespace :api, default: { format: :json} do
+    namespace :users do 
+      namespace :v1 do 
+        resources :registration, only: [:create]
+      end
+    end
+  end
 end

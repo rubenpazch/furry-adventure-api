@@ -1,7 +1,6 @@
 class Api::V1::LoginController < ApplicationController
   def create
     @user = User.find_by_email(user_params[:email])
-    byebug
     if @user&.authenticate(user_params[:password])
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),
