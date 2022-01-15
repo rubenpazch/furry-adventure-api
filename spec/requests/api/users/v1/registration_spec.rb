@@ -35,8 +35,7 @@ RSpec.describe "should create a new user", type: :request do
                                          }
       expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body)
-      expect(json_response["errors"].first[1][0]).to eq("has already been taken")
-      expect(json_response["errors"].first[0]).to eq("email")
+      expect(json_response["errors"]).not_to be_empty
     end
   end
 end
