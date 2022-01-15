@@ -1,7 +1,7 @@
 class Api::V1::LoginController < ApplicationController
-  
   def create
     @user = User.find_by_email(user_params[:email])
+    byebug
     if @user&.authenticate(user_params[:password])
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),
@@ -9,7 +9,7 @@ class Api::V1::LoginController < ApplicationController
         email: @user.email,
         first_name: @user.first_name,
         last_name: @user.last_name,
-        id: @user.id,  
+        id: @user.id,
       }
     else
       head :unauthorized
@@ -17,6 +17,7 @@ class Api::V1::LoginController < ApplicationController
   end
 
   private
+
   # Only allow a trusted parameter "white list" through.
   def user_params
     params.require(:user).permit(:email, :password)
