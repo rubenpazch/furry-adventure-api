@@ -22,14 +22,21 @@ ModuleApp.create(name: 'Restaurant', description: 'Option to offer tours')
 ModuleApp.create(name: 'Cloths', description: 'Option to offer tours')
 
 #CreateRoles
-Role.create(name: 'SuperAdministrator', profile_id: @admin_profile.id)
-Role.create(name: 'Owner', profile_id: @manager_profile.id)
-Role.create(name: 'IT support', profile_id: @manager_profile.id)
-Role.create(name: 'Sales Manager', profile_id: @manager_profile.id)
-Role.create(name: 'Salesman', profile_id: @manager_profile.id)
-Role.create(name: 'Traveler', profile_id: @sales_tours.id)
-Role.create(name: 'Client', profile_id: @sales_tours.id)
+@superAdmin = Role.create(name: 'SuperAdministrator', profile_id: @admin_profile.id, is_root: true, parent_id: 0)
 
+@admin = Role.create(name: 'Admin', profile_id: @manager_profile.id, is_root: false, parent_id: @superAdmin.id)
+
+@owner = Role.create(name: 'Owner', profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
+@itsupport = Role.create(name: 'IT support', profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
+@salesmanager = Role.create(name: 'Sales Manager', profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
+
+@salesman = Role.create(name: 'Salesman', profile_id: @manager_profile.id, is_root: false, parent_id: @salesmanager.id)
+
+@traveler = Role.create(name: 'Traveler', profile_id: @sales_tours.id, is_root: false, parent_id: @salesman.id)
+@client = Role.create(name: 'Client', profile_id: @sales_tours.id, is_root: false, parent_id: @salesman.id)
+
+
+#privileges
 @privilegeManageUser = Privilege.create(name: 'Manage Users')
 @privilegeManageTours = Privilege.create(name: 'Manage Tours')
 @privilegeManageRestaurant = Privilege.create(name: 'Manage Restaurants')

@@ -13,4 +13,9 @@ class User < ApplicationRecord
   validates :password_digest, presence: true, format: { with: PASSWORD_FORMAT }
 
   has_secure_password
+
+  def is_admin?
+    is_root?
+  end
+
 end
