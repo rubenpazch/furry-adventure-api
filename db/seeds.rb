@@ -9,7 +9,7 @@
 #profiles
 @admin_profile = Profile.create(name: 'administrator')
 @manager_profile = Profile.create(name: 'manager')
-@client_profile = Profile.create(name: 'client')
+@sales_tours = Profile.create(name: 'salesman-tours')
 
 #admin user
 @user_admin = User.create(email: 'admin@testing.com', password: 'CuscoPeru123.', first_name: 'admin', last_name: 'user') 
@@ -27,12 +27,16 @@ Role.create(name: 'Owner', profile_id: @manager_profile.id)
 Role.create(name: 'IT support', profile_id: @manager_profile.id)
 Role.create(name: 'Sales Manager', profile_id: @manager_profile.id)
 Role.create(name: 'Salesman', profile_id: @manager_profile.id)
-Role.create(name: 'Traveler', profile_id: @client_profile.id)
-Role.create(name: 'Client', profile_id: @client_profile.id)
+Role.create(name: 'Traveler', profile_id: @sales_tours.id)
+Role.create(name: 'Client', profile_id: @sales_tours.id)
 
 @privilegeManageUser = Privilege.create(name: 'Manage Users')
-@privilegeManageUser = Privilege.create(name: 'Manage Tours')
-@privilegeManageUser = Privilege.create(name: 'Manage Restarants')
+@privilegeManageTours = Privilege.create(name: 'Manage Tours')
+@privilegeManageRestaurant = Privilege.create(name: 'Manage Restaurants')
+
+AccessPrivilege.create( profile_id: @admin_profile.id, privilege_id: @privilegeManageUser.id)
+AccessPrivilege.create( profile_id: @manager_profile.id, privilege_id: @privilegeManageUser.id)
+AccessPrivilege.create( profile_id: @sales_tours.id, privilege_id: @privilegeManageTours.id)
 
 #Permission.create(name: 'Create')
 #Permission.create(name: 'Edit')
