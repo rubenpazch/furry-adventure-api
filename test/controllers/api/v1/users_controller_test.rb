@@ -17,7 +17,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_difference("User.count") do
       post api_v1_users_url, params: {
                                user: {
-                                 email: "testingNew@gmail.com", 
+                                 email: "testingNew@gmail.com",
                                  password: "123456",
                                  first_name: "aleatory firstname",
                                  last_name: "aleatoryy lastname",
@@ -52,18 +52,31 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   #end
 
   test "should update user with valid token" do
-    patch api_v1_user_url(@user), params: { user: { email: @user.email } }, headers: { Authorization: JsonWebToken.encode(user_id: @user.id) }, as: :json
+    patch api_v1_user_url(@user), params: {
+                                    user: {
+                                      email: @user.email,
+                                    },
+                                  },
+                                  headers: {
+                                    Authorization: JsonWebToken.encode(user_id: @user.id),
+                                  }, as: :json
     assert_response :success
   end
 
   test "should forbid update user" do
-    patch api_v1_user_url(@user), params: { user: { email: @user.email } }, as: :json
+    patch api_v1_user_url(@user), params: {
+                                    user: {
+                                      email: @user.email,
+                                    },
+                                  }, as: :json
     assert_response :forbidden
   end
 
   test "should destroy user with valid token" do
     assert_difference("User.count", -1) do
-      delete api_v1_user_url(@user), headers: { Authorization: JsonWebToken.encode(user_id: @user.id) }, as: :json
+      delete api_v1_user_url(@user), headers: {
+                                       Authorization: JsonWebToken.encode(user_id: @user.id),
+                                     }, as: :json
     end
     assert_response :no_content
   end
