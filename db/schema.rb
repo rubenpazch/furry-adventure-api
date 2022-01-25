@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_035606) do
+ActiveRecord::Schema.define(version: 2022_01_25_023316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -21,6 +21,30 @@ ActiveRecord::Schema.define(version: 2022_01_19_035606) do
     t.integer "privilege_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "job_organizations", force: :cascade do |t|
+    t.string "title"
+    t.string "location"
+    t.string "logo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.integer "total_vacancies"
+    t.date "application_date"
+    t.date "last_application_date"
+    t.integer "area"
+    t.integer "location"
+    t.string "salary"
+    t.string "external_link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "job_organization_id", null: false
+    t.index ["job_organization_id"], name: "index_jobs_on_job_organization_id"
   end
 
   create_table "module_apps", force: :cascade do |t|
@@ -76,4 +100,5 @@ ActiveRecord::Schema.define(version: 2022_01_19_035606) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "jobs", "job_organizations"
 end
