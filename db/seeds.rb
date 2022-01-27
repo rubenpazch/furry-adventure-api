@@ -50,13 +50,16 @@ AccessPrivilege.create( profile_id: @sales_tours.id, privilege_id: @privilegeMan
 #Permission.create(name: 'View')
 #Permission.create(name: 'Delete')
 
-Job.create(title: "Gestora Local", description: "JUNTOS requiere nuevo personal.", total_vacancies: 1, application_date: "03/12/2022", last_application_date: "17/12/2022", area: "Programa Nacional Juntos", location: 1, salary: "S/. 2000.00", external_link:"wwww.google.com")
-Job.create(title: "Encuestadores", description: "Reniec requiere nuevo personal.", total_vacancies: 1, application_date: "03/12/2022", last_application_date: "17/12/2022", area: "Programa Nacional Juntos", location: 1, salary: "S/. 3000.00", external_link:"wwww.google.com")
 
-Job::Organization.create(title: "Poder Judicial", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
-Job::Organization.create(title: "Sunarp", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
-Job::Organization.create(title: "Sunat", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
-Job::Organization.create(title: "Reniec", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
+@jo1 = Jobs::Organization.create(title: "Poder Judicial", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
+@jo2 = Jobs::Organization.create(title: "Sunarp", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
+@jo3 = Jobs::Organization.create(title: "Sunat", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
+@jo4 = Jobs::Organization.create(title: "Reniec", location: "ubicacion de la organizacion", logo: "http://www.google.com/log.png")
+
+
+Job.create(title: "Gestora Local", description: "JUNTOS requiere nuevo personal.", total_vacancies: 1, application_date: "03/12/2022", last_application_date: "17/12/2022", area: "Programa Nacional Juntos", location: 1, salary: "S/. 2000.00", external_link:"wwww.google.com", job_organization_id: @jo1.id)
+Job.create(title: "Encuestadores", description: "Reniec requiere nuevo personal.", total_vacancies: 1, application_date: "03/12/2022", last_application_date: "17/12/2022", area: "Programa Nacional Juntos", location: 1, salary: "S/. 3000.00", external_link:"wwww.google.com", job_organization_id: @jo2.id)
+
 
 #Job::Type.create(title: "Convocatorias Vigentes")
 #Job::Type.create(title: "Convocatorias Cas")
