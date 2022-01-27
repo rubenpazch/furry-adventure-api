@@ -15,5 +15,10 @@ Rails.application.routes.draw do
         resources :registration, only: [:create]
       end
     end
+    namespace :jobs do 
+      namespace :v1 do 
+        resources :jobs, only: [:index]
+      end
+    end
   end
 end
