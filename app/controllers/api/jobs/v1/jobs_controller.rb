@@ -1,6 +1,5 @@
 class Api::Jobs::V1::JobsController < ApplicationController
   def index
-    byebug
-    render json: Jobs.all, status: :ok
+    render json: Job.all, status: :ok
   end
 end

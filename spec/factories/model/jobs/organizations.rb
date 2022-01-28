@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :organization, :class => Jobs::Organization do
-    title { "Reniec" }
-    location { "ubicacion de la organizacion" }
-    logo { "http://www.google.com/log.png" }
+    title { Faker::Company.name }
+    location { Faker::Address.full_address }
+    logo { Faker::LoremFlickr.image(size: "50x60") }
   end
 end
