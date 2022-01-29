@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :job do
-    title { "MyString" }
-    description { "MyString" }
-    total_vacancies { "" }
-    application_date { "2022-01-26" }
-    last_application_date { "2022-01-26" }
-    area { 1 }
-    location { "" }
-    salary { "MyString" }
-    external_link { "MyString" }
+    title { Faker::Job.title }
+    description { Faker::Job.title }
+    total_vacancies { Faker::Number.between(from: 1, to: 50) }
+    application_date { Faker::Date.between(from: '2022-01-23', to: '2022-01-25') }
+    last_application_date { Faker::Date.between(from: '2022-01-25', to: '2022-02-15') }
+    area { Faker::Number.between(from: 1, to: 50) }
+    location { Faker::Address.full_address }
+    salary { Faker::Number.between(from: 1000, to: 5000) }
+    external_link { Faker::Internet.domain_name }
   end
 end
