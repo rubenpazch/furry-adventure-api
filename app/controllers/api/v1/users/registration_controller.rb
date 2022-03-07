@@ -1,4 +1,4 @@
-class Api::Users::V1::RegistrationController < ApplicationController
+class Api::V1::Users::RegistrationController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.valid?

@@ -10,20 +10,24 @@ Rails.application.routes.draw do
   end
 
   namespace :api, default: { format: :json} do
-    namespace :users do 
-      namespace :v1 do 
+    namespace :v1 do 
+      namespace :users do 
         resources :registration, only: [:create]
       end
     end
-    namespace :jobs do 
-      namespace :v1 do 
-        resources :jobs, only: [:index]
-      end
+    namespace :v1 do 
+      resources :jobs, only: [:index]
     end
     namespace :products do 
       namespace :v1 do 
         resources :products, only: [:index]
       end
     end
+    namespace :product_categories do 
+      namespace :v1 do 
+        resource :product_categories, only: [:index]
+      end
+    end 
+
   end
 end
