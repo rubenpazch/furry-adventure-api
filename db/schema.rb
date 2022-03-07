@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_06_224635) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,6 +59,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_224635) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "slug"
+    t.integer "product_count"
+    t.string "icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.decimal "price"
@@ -68,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_224635) do
     t.decimal "sale_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "product_category_id", null: false
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
   create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -97,4 +109,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_06_224635) do
   end
 
   add_foreign_key "jobs", "job_organizations"
+  add_foreign_key "products", "product_categories"
 end

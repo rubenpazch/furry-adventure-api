@@ -122,6 +122,38 @@ Job.create(
   job_organization_id: @jo4.id,
 )
 
+Products::Category.create(
+  title: 'Tapices Inca',
+  description: 'Tapices Inca',
+  slug: 'tapices-inca',
+  product_count: 20,
+  icon: '/assets/images/category/icons/woman.png',
+)
+
+Products::Category.create(
+  title: 'Tapices Pre-Inca',
+  description: 'Tapices Pre-Inca',
+  slug: 'tapices-pre-inca',
+  product_count: 20,
+  icon: '/assets/images/category/icons/woman.png',
+)
+
+Products::Category.create(
+  title: 'Tapices Coloniales',
+  description: 'Tapices Coloniales',
+  slug: 'tapices-coloniales',
+  product_count: 20,
+  icon: '/assets/images/category/icons/woman.png',
+)
+
+Products::Category.create(
+  title: 'Tapices Moderno',
+  description: 'Tapices Moderno',
+  slug: 'tapices-moderno',
+  product_count: 20,
+  icon: '/assets/images/category/icons/woman.png',
+)
+
 #Job::Type.create(title: "Convocatorias Vigentes")
 #Job::Type.create(title: "Convocatorias Cas")
 #Job::Type.create(title: "Practicas")
