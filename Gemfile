@@ -49,6 +49,8 @@ gem "bcrypt", "~> 3.1.7"
 
 gem "jwt", "~> 2.3"
 
-gem "pry", "~> 0.14.1"
+gem "pry", "~> 0.13.0"
+
+gem "pry-byebug", "~> 3.9.0"
 
 gem 'net-smtp', require: false
