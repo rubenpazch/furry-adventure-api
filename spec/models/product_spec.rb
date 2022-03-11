@@ -1,20 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  before(:all) do 
-    @product_valid = create(:product)
-    @product_invalid = create(:product)
+  context "has valid product" do 
+    let(:valid_product)  { build :product }
+    let(:valid_category)  { create :category }
 
+    it "with valid attributes" do
+      valid_product.product_category_id = valid_category.id
+      valid_product.save!
+      expect(valid_product).to be_valid
+    end
+
+    it "with valid slug" do 
+      
+    end
   end
 
-  it "has valid attributes" do
-    expect(@product_valid).to be_valid
-  end
+  context "has invalid product" do 
+    let(:invalid_product)  { build :product }
+    let(:invalid_category)  { create :category }
 
-  it "has invalid attribute for price in product" do
-    @product_invalid.price = 'test'
-    expect(@product_invalid).to be_invalid
-    @product_invalid.price = -1
-    expect(@product_invalid).to be_invalid
-  end 
+    it "with invalid slug" do 
+    end
+  end
 end
