@@ -122,7 +122,7 @@ Job.create(
   job_organization_id: @jo4.id,
 )
 
-Products::Category.create(
+@category1 = Products::Category.create(
   title: 'Tapices Inca',
   description: 'Tapices Inca',
   slug: 'tapices-inca',
@@ -130,7 +130,7 @@ Products::Category.create(
   icon: '/assets/images/category/icons/woman.png',
 )
 
-Products::Category.create(
+@category2 = Products::Category.create(
   title: 'Tapices Pre-Inca',
   description: 'Tapices Pre-Inca',
   slug: 'tapices-pre-inca',
@@ -138,7 +138,7 @@ Products::Category.create(
   icon: '/assets/images/category/icons/woman.png',
 )
 
-Products::Category.create(
+@category3 = Products::Category.create(
   title: 'Tapices Coloniales',
   description: 'Tapices Coloniales',
   slug: 'tapices-coloniales',
@@ -146,12 +146,42 @@ Products::Category.create(
   icon: '/assets/images/category/icons/woman.png',
 )
 
-Products::Category.create(
+@category4 = Products::Category.create(
   title: 'Tapices Moderno',
   description: 'Tapices Moderno',
   slug: 'tapices-moderno',
   product_count: 20,
   icon: '/assets/images/category/icons/woman.png',
+)
+
+Product.create(
+  title: 'Tapiz Wari Images Zoomorfas',
+  price: 12,
+  published: true,
+  description: "testing testing",
+  slug: "tapiz-wari-images-zoomorfas",
+  sale_price: 14,
+  product_category_id: @category1.id
+)
+
+Product.create(
+  title: 'Tapiz Wari Images Geometricas',
+  price: 12,
+  published: true,
+  description: "testing testing",
+  slug: "tapiz-wari-images-zoomorfas",
+  sale_price: 14,
+  product_category_id: @category1.id
+)
+
+Product.create(
+  title: 'Tapiz Wari Images Triangulares',
+  price: 12,
+  published: true,
+  description: "testing testing",
+  slug: "tapiz-wari-images-zoomorfas",
+  sale_price: 14,
+  product_category_id: @category1.id
 )
 
 #Job::Type.create(title: "Convocatorias Vigentes")
