@@ -18,16 +18,13 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :jobs, only: [:index]
     end
-    namespace :products do 
-      namespace :v1 do 
-        resources :products, only: [:index]
-      end
+    namespace :v1 do 
+      resources :products, only: [:index]
     end
-    namespace :product_categories do 
-      namespace :v1 do 
-        resource :product_categories, only: [:index]
+    namespace :v1 do 
+      namespace :products do 
+        resources :categories, only: [:index]
       end
     end 
-
   end
 end
