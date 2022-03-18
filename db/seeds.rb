@@ -15,6 +15,9 @@
 @user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user")
 #basic user
 @user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user")
+#sulca user
+@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles")
+
 
 #Modules
 ModuleApp.create(name: "Tours", description: "Option to offer tours")
@@ -154,35 +157,35 @@ Job.create(
   icon: '/assets/images/category/icons/woman.png',
 )
 
-Product.create(
-  title: 'Tapiz Wari Images Zoomorfas',
-  price: 12,
-  published: true,
-  description: "testing testing",
-  slug: "tapiz-wari-images-zoomorfas",
-  sale_price: 14,
-  product_category_id: @category1.id
-)
+#Product.create(
+#  title: 'Tapiz Wari Images Zoomorfas',
+#  price: 12,
+#  published: true,
+#  description: "testing testing",
+#  slug: "tapiz-wari-images-zoomorfas",
+#  sale_price: 14,
+#  product_category_id: @category1.id
+#)
 
-Product.create(
-  title: 'Tapiz Wari Images Geometricas',
-  price: 12,
-  published: true,
-  description: "testing testing",
-  slug: "tapiz-wari-images-zoomorfas",
-  sale_price: 14,
-  product_category_id: @category1.id
-)
+#Product.create(
+#  title: 'Tapiz Wari Images Geometricas',
+#  price: 12,
+#  published: true,
+#  description: "testing testing",
+#  slug: "tapiz-wari-images-zoomorfas",
+#  sale_price: 14,
+#  product_category_id: @category1.id
+#)
 
-Product.create(
-  title: 'Tapiz Wari Images Triangulares',
-  price: 12,
-  published: true,
-  description: "testing testing",
-  slug: "tapiz-wari-images-zoomorfas",
-  sale_price: 14,
-  product_category_id: @category1.id
-)
+#Product.create(
+#  title: 'Tapiz Wari Images Triangulares',
+#  price: 12,
+#  published: true,
+#  description: "testing testing",
+#  slug: "tapiz-wari-images-zoomorfas",
+#  sale_price: 14,
+#  product_category_id: @category1.id
+#)
 
 #Job::Type.create(title: "Convocatorias Vigentes")
 #Job::Type.create(title: "Convocatorias Cas")

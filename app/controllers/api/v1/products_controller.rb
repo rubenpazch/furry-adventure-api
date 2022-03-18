@@ -4,6 +4,6 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def index 
-    render json: Product.all
+    render json: Product.all, status: :ok
   end
 end
