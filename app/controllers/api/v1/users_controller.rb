@@ -6,17 +6,16 @@ class Api::V1::UsersController < ApplicationController
     render json: @user
   end
 
-  def create 
+  def create
     @user = User.new(user_params)
-
     if @user.save
       render json: @user, status: :created
-    else 
+    else
       render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  def update 
+  def update
     if @user.update(user_params)
       render json: @user, status: :ok
     else
@@ -24,7 +23,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def destroy 
+  def destroy
     @user.destroy
     head 204
   end
@@ -33,15 +32,16 @@ class Api::V1::UsersController < ApplicationController
     render json: User.all, status: :ok
   end
 
-  private 
+  private
+
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :password)
+    params.require(:user).permit(:email, :first_name, :last_name, :password, :account_id)
   end
 
   def set_user
     @user = User.find(params[:id])
   end
-  
+
   def check_owner
     head :forbidden unless @user.id == current_user&.id
   end

@@ -1,21 +1,27 @@
 require "rails_helper"
 
 RSpec.describe "should create a new user", type: :request do
-  before(:all) do
-    @new_user = build(:user)
-    @duplicate_user = build(:user)
+  let(:user_valid) { build(:user) }
+  let(:valid_organization) { create(:organization) }
+  let(:valid_account) { build(:account) }
+
+  before(:each) do
+    valid_account.organizations_id = valid_organization.id
+    valid_account.save!
   end
+
   describe "Registration" do
     it "should create a new user" do
       headers = { "ACCEPT" => "application/json" }
       post "/api/v1/users/registration", :params => {
                                            :user => {
-                                             :email => @new_user.email,
-                                             :password => "P4ssw0rd",
-                                             :first_name => @new_user.first_name,
-                                             :last_name => @new_user.last_name,
+                                             :email => user_valid.email,
+                                             :password => user_valid.password_digest,
+                                             :first_name => user_valid.first_name,
+                                             :last_name => user_valid.last_name,
+                                             :account_id => valid_account.id,
                                            },
-                                         }
+                                         }, headers: headers
       expect(response).to have_http_status(:created)
       json_response = JSON.parse(response.body)
       expect(json_response["username"]).not_to be_nil
