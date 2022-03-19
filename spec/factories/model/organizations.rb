@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :organization do
+  factory :organization, :class => Organization do
     
   end
 end

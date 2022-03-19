@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  belongs_to :accounts
+  belongs_to :account
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/, :message => "has incorrect format"
 
@@ -15,8 +15,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def is_admin?
-    is_root?
+  def is_super_admin?
+    isSuperAdmin?
   end
 
 end

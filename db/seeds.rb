@@ -6,17 +6,23 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+@organization_sulca = Organization.create(name: "Artexaperu", description: "Empresa de textiles peru")
+@account_sulca = Account.create(name: "Museo Sulca Textiles", organizations_id: @organization_sulca.id)
+
+@global_organization = Organization.create(name: "Ruben Paz Chuspe", description: "Empresa de desarrollo")
+@global_account = Account.create(name: "administrators", organizations_id: @global_organization.id)
+
 #profiles
 @admin_profile = Profile.create(name: "administrator")
 @manager_profile = Profile.create(name: "manager")
 @sales_tours = Profile.create(name: "salesman-tours")
 
-#admin user
-@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user")
+#super admin user
+@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true)
 #basic user
-@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user")
+@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user", account_id: @global_account.id, isSuperAdmin: false)
 #sulca user
-@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles")
+@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id , isSuperAdmin: false)
 
 
 #Modules
