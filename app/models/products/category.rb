@@ -4,7 +4,7 @@ module Products
     validate :slug_equal_to_title_with_dashes
 
     def slug_equal_to_title_with_dashes
-      if title.split(' ').join('-') != slug 
+      if title.downcase.split(' ').join('-') != slug 
         errors.add(:slug_compared_with_title, "Need to be equal with dashes")
       end
     end

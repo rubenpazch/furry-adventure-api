@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_19_104545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -20,6 +20,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
     t.integer "privilege_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.string "address"
+    t.bigint "organizations_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organizations_id"], name: "index_accounts_on_organizations_id"
   end
 
   create_table "job_organizations", force: :cascade do |t|
@@ -53,6 +63,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "organization_id"
+    t.string "legal_name"
+    t.string "address"
+    t.integer "country_code"
+    t.integer "city_code"
+    t.integer "province"
+    t.integer "district"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "privileges", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -69,6 +93,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "product_category_images", force: :cascade do |t|
+    t.string "thumbnail"
+    t.string "original"
+    t.bigint "product_categories_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_categories_id"], name: "index_product_category_images_on_product_categories_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.decimal "price"
@@ -79,6 +112,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "product_category_id", null: false
+    t.bigint "account_id", null: false
+    t.string "slug_collection"
+    t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
@@ -105,9 +141,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_015049) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.bigint "account_id"
+    t.boolean "isSuperAdmin"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
+  add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
+  add_foreign_key "products", "accounts"
   add_foreign_key "products", "product_categories"
 end

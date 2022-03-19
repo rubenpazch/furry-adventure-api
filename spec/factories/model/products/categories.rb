@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :products_category, :class => Products::Category do 
     title { category_name }
     description { Faker::Lorem.sentence }
-    slug { category_name.split(' ').join('-') }
+    slug { category_name.downcase.split(' ').join('-') }
     product_count { Faker::Number.between(from: 1, to: 100) }
     icon { Faker::LoremFlickr.image(size: "50x60") } 
   end

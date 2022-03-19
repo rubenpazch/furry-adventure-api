@@ -6,18 +6,23 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+@organization_sulca = Organization.create(name: "Artexaperu", description: "Empresa de textiles peru")
+@account_sulca = Account.create(name: "Museo Sulca Textiles", organizations_id: @organization_sulca.id)
+
+@global_organization = Organization.create(name: "Ruben Paz Chuspe", description: "Empresa de desarrollo")
+@global_account = Account.create(name: "administrators", organizations_id: @global_organization.id)
+
 #profiles
 @admin_profile = Profile.create(name: "administrator")
 @manager_profile = Profile.create(name: "manager")
 @sales_tours = Profile.create(name: "salesman-tours")
 
-#admin user
-@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user")
+#super admin user
+@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true)
 #basic user
-@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user")
+@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user", account_id: @global_account.id, isSuperAdmin: false)
 #sulca user
-@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles")
-
+@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false)
 
 #Modules
 ModuleApp.create(name: "Tours", description: "Option to offer tours")
@@ -77,8 +82,8 @@ Job.create(
   title: Faker::Job.title,
   description: Faker::Job.title,
   total_vacancies: Faker::Number.between(from: 1, to: 50),
-  application_date: Faker::Date.between(from: '2022-01-23', to: '2022-01-25'),
-  last_application_date: Faker::Date.between(from: '2022-01-25', to: '2022-02-15'),
+  application_date: Faker::Date.between(from: "2022-01-23", to: "2022-01-25"),
+  last_application_date: Faker::Date.between(from: "2022-01-25", to: "2022-02-15"),
   area: Faker::Number.between(from: 1, to: 50),
   location: Faker::Address.full_address,
   salary: Faker::Number.between(from: 1000, to: 5000),
@@ -90,8 +95,8 @@ Job.create(
   title: Faker::Job.title,
   description: Faker::Job.title,
   total_vacancies: Faker::Number.between(from: 1, to: 50),
-  application_date: Faker::Date.between(from: '2022-01-23', to: '2022-01-25'),
-  last_application_date: Faker::Date.between(from: '2022-01-25', to: '2022-02-15'),
+  application_date: Faker::Date.between(from: "2022-01-23", to: "2022-01-25"),
+  last_application_date: Faker::Date.between(from: "2022-01-25", to: "2022-02-15"),
   area: Faker::Number.between(from: 1, to: 50),
   location: Faker::Address.full_address,
   salary: Faker::Number.between(from: 1000, to: 5000),
@@ -103,8 +108,8 @@ Job.create(
   title: Faker::Job.title,
   description: Faker::Job.title,
   total_vacancies: Faker::Number.between(from: 1, to: 50),
-  application_date: Faker::Date.between(from: '2022-01-23', to: '2022-01-25'),
-  last_application_date: Faker::Date.between(from: '2022-01-25', to: '2022-02-15'),
+  application_date: Faker::Date.between(from: "2022-01-23", to: "2022-01-25"),
+  last_application_date: Faker::Date.between(from: "2022-01-25", to: "2022-02-15"),
   area: Faker::Number.between(from: 1, to: 50),
   location: Faker::Address.full_address,
   salary: Faker::Number.between(from: 1000, to: 5000),
@@ -116,8 +121,8 @@ Job.create(
   title: Faker::Job.title,
   description: Faker::Job.title,
   total_vacancies: Faker::Number.between(from: 1, to: 50),
-  application_date: Faker::Date.between(from: '2022-01-23', to: '2022-01-25'),
-  last_application_date: Faker::Date.between(from: '2022-01-25', to: '2022-02-15'),
+  application_date: Faker::Date.between(from: "2022-01-23", to: "2022-01-25"),
+  last_application_date: Faker::Date.between(from: "2022-01-25", to: "2022-02-15"),
   area: Faker::Number.between(from: 1, to: 50),
   location: Faker::Address.full_address,
   salary: Faker::Number.between(from: 1000, to: 5000),
@@ -126,46 +131,128 @@ Job.create(
 )
 
 @category1 = Products::Category.create(
-  title: 'Tapices Inca',
-  description: 'Tapices Inca',
-  slug: 'tapices-inca',
-  product_count: 20,
-  icon: '/assets/images/category/icons/woman.png',
+  title: "Tapices Inca",
+  description: "Tapices Inca",
+  slug: "tapices-inca",
+  product_count: 0,
+  icon: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+)
+
+@image1 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  original: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  product_categories_id: @category1.id,
+)
+
+Product.create(
+  title: "Tapiz Wari Images Zoomorfas",
+  price: 12,
+  published: true,
+  description: "testing testing",
+  slug: "tapiz-wari-images-zoomorfas",
+  slug_collection: @category1.slug,
+  sale_price: 14,
+  product_category_id: @category1.id,
+  account_id: @account_sulca.id
 )
 
 @category2 = Products::Category.create(
-  title: 'Tapices Pre-Inca',
-  description: 'Tapices Pre-Inca',
-  slug: 'tapices-pre-inca',
-  product_count: 20,
-  icon: '/assets/images/category/icons/woman.png',
+  title: "Tapices Pre-Inca",
+  description: "Tapices Pre-Inca",
+  slug: "tapices-pre-inca",
+  product_count: 0,
+  icon: "/assets/images/category/icons/woman.png",
+)
+
+@image2 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapices-pre-inca-300x300.jpg",
+  original: "/assets/images/category/tapices/tapices-pre-inca-300x300.jpg",
+  product_categories_id: @category2.id,
 )
 
 @category3 = Products::Category.create(
-  title: 'Tapices Coloniales',
-  description: 'Tapices Coloniales',
-  slug: 'tapices-coloniales',
-  product_count: 20,
-  icon: '/assets/images/category/icons/woman.png',
+  title: "Tapices Coloniales",
+  description: "Tapices Coloniales",
+  slug: "tapices-coloniales",
+  product_count: 0,
+  icon: "/assets/images/category/icons/woman.png",
+)
+
+@image3 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapiz-colonial-300x300.jpg",
+  original: "/assets/images/category/tapices/tapiz-colonial-300x300.jpg",
+  product_categories_id: @category3.id,
 )
 
 @category4 = Products::Category.create(
-  title: 'Tapices Moderno',
-  description: 'Tapices Moderno',
-  slug: 'tapices-moderno',
+  title: "Arte Moderno",
+  description: "Arte Moderno",
+  slug: "arte-moderno",
   product_count: 20,
-  icon: '/assets/images/category/icons/woman.png',
+  icon: "/assets/images/category/icons/woman.png",
 )
 
-#Product.create(
-#  title: 'Tapiz Wari Images Zoomorfas',
-#  price: 12,
-#  published: true,
-#  description: "testing testing",
-#  slug: "tapiz-wari-images-zoomorfas",
-#  sale_price: 14,
-#  product_category_id: @category1.id
-#)
+@image4 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/arte-moderno-300x300.jpg",
+  original: "/assets/images/category/tapices/arte-moderno-300x300.jpg",
+  product_categories_id: @category4.id,
+)
+
+@category5 = Products::Category.create(
+  title: "Arte 3D",
+  description: "Arte 3D",
+  slug: "arte-3d",
+  product_count: 20,
+  icon: "/assets/images/category/icons/woman.png",
+)
+
+@image5 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/arte-3d-300x300.jpg",
+  original: "/assets/images/category/tapices/arte-3d-300x300.jpg",
+  product_categories_id: @category5.id,
+)
+
+@category6 = Products::Category.create(
+  title: "Arte Pre-Colombino",
+  description: "Arte Pre-Colombino",
+  slug: "arte-pre-colombino",
+  product_count: 20,
+  icon: "/assets/images/category/icons/woman.png",
+)
+
+@image6 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/arte-pre-colombino.jpg",
+  original: "/assets/images/category/tapices/arte-pre-colombino.jpg",
+  product_categories_id: @category6.id,
+)
+
+@category7 = Products::Category.create(
+  title: "Tapices 3D",
+  description: "Tapices 3D",
+  slug: "tapices-3D",
+  product_count: 20,
+  icon: "/assets/images/category/icons/woman.png",
+)
+
+@image7 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapices-arte-3d-5-300x300.jpg",
+  original: "/assets/images/category/tapices/tapices-arte-3d-5-300x300.jpg",
+  product_categories_id: @category7.id,
+)
+
+@category8 = Products::Category.create(
+  title: "Arte Moderno",
+  description: "Arte Moderno",
+  slug: "arte-moderno",
+  product_count: 20,
+  icon: "/assets/images/category/tapices/tapiz-arte-moderno-2-300x300.jpg",
+)
+
+@image8 = Products::Categories::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapiz-arte-moderno-2-300x300.jpg",
+  original: "/assets/images/category/tapices/tapiz-arte-moderno-2-300x300.jpg",
+  product_categories_id: @category8.id,
+)
 
 #Product.create(
 #  title: 'Tapiz Wari Images Geometricas',
