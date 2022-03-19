@@ -2,7 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Products::Categories", type: :request do
   context "GET /index" do
-    let(:valid_category) { create :products_category }
+    let(:valid_category) { build(:products_category) }
+
+    before(:each) do 
+      valid_category.save!
+    end
 
     it "should return a list of categories" do
       headers = { "ACCEPT" => "application/json" }
