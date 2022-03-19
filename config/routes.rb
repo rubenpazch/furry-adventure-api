@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       namespace :products do
         resources :categories, only: [:index]
       end
-      resources :products, only: [:index, :show]
+      resources :products, only: [:index, :show, :create, :update]
     end
   end
 end
