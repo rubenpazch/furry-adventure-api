@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_19_102042) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_19_104545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -112,6 +112,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_102042) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "product_category_id", null: false
+    t.bigint "account_id", null: false
+    t.string "slug_collection"
+    t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
@@ -147,5 +150,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_19_102042) do
   add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
   add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
+  add_foreign_key "products", "accounts"
   add_foreign_key "products", "product_categories"
 end
