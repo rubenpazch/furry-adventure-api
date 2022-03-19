@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  belongs_to :accounts
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/, :message => "has incorrect format"
 
