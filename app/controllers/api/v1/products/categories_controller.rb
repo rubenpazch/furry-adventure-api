@@ -1,5 +1,8 @@
 class Api::V1::Products::CategoriesController < ApplicationController
   def index
-    render json: { data: Products::Category.all }, status: :ok
+    @categories = Products::Category.all
+    render jsonapi: @categories,
+           include: [:product_category_images],
+           status: :ok
   end
 end

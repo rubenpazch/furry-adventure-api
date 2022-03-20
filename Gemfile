@@ -54,4 +54,5 @@ gem "pry", "~> 0.13.0"
 gem "pry-byebug", "~> 3.9.0"
 
 gem 'net-smtp', require: false
-gem "fast_jsonapi", "~> 1.5"
+
+gem "jsonapi-rails", "~> 0.4.0"
