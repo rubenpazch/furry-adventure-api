@@ -21,8 +21,7 @@ RSpec.describe "Api::V1::Products::Categories", type: :request do
       get "/api/v1/products/categories", headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      binding.pry
-      expect(json_response["data"].length).to be_equal(2)
+      expect(json_response.length).to be_equal(2)
     end
   end
 end

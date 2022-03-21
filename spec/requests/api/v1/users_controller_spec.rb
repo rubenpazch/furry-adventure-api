@@ -18,7 +18,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       get "/api/v1/users/#{user_valid.id}"
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["data"]["attributes"]["email"]).to eq(user_valid.email)
+      expect(json_response["email"]).to eq(user_valid.email)
     end
   end
 
