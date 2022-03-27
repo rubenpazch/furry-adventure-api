@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       #resources :users, only: [:show, :create, :update, :destroy]
       resources :login, only: [:create]
-      get "tokens", to: "tokens#verify"
+      post "tokens", to: "tokens#verify"
       #get "users", to: "users#admins"
     end
   end
