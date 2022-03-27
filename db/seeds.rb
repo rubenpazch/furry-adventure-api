@@ -12,6 +12,9 @@
 @global_organization = Organization.create(name: "Ruben Paz Chuspe", description: "Empresa de desarrollo")
 @global_account = Account.create(name: "administrators", organizations_id: @global_organization.id)
 
+@daniel_organization =  Organization.create(name: "Daniel Cusihuaman", description: "Lunotopia")
+@daniel_account = Account.create(name: "Luneteria", organizations_id: @daniel_organization.id)
+
 #profiles
 @admin_profile = Profile.create(name: "administrator")
 @manager_profile = Profile.create(name: "manager")
@@ -23,6 +26,9 @@
 @user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user", account_id: @global_account.id, isSuperAdmin: false)
 #sulca user
 @sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false)
+#daniel user
+@daniel_admin = User.create(email: "daniel@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "daniel", last_name: "lentes", account_id: @daniel_account.id, isSuperAdmin: false)
+
 
 #Modules
 ModuleApp.create(name: "Tours", description: "Option to offer tours")
@@ -136,6 +142,7 @@ Job.create(
   slug: "tapices-inca",
   product_count: 0,
   icon: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  account_id: @account_sulca.id,
 )
 
 @image1 = Products::Categories::Image.create(
@@ -162,6 +169,7 @@ Product.create(
   slug: "tapices-pre-inca",
   product_count: 0,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image2 = Products::Categories::Image.create(
@@ -176,6 +184,7 @@ Product.create(
   slug: "tapices-coloniales",
   product_count: 0,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image3 = Products::Categories::Image.create(
@@ -190,6 +199,7 @@ Product.create(
   slug: "arte-moderno",
   product_count: 20,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image4 = Products::Categories::Image.create(
@@ -204,6 +214,7 @@ Product.create(
   slug: "arte-3d",
   product_count: 20,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image5 = Products::Categories::Image.create(
@@ -218,6 +229,7 @@ Product.create(
   slug: "arte-pre-colombino",
   product_count: 20,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image6 = Products::Categories::Image.create(
@@ -232,6 +244,7 @@ Product.create(
   slug: "tapices-3D",
   product_count: 20,
   icon: "/assets/images/category/icons/woman.png",
+  account_id: @account_sulca.id,
 )
 
 @image7 = Products::Categories::Image.create(
@@ -246,6 +259,7 @@ Product.create(
   slug: "arte-moderno",
   product_count: 20,
   icon: "/assets/images/category/tapices/tapiz-arte-moderno-2-300x300.jpg",
+  account_id: @account_sulca.id,
 )
 
 @image8 = Products::Categories::Image.create(

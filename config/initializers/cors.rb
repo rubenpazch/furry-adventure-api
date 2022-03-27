@@ -6,10 +6,11 @@
 # Read more: https://github.com/cyu/rack-cors
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins 'localhost:3005'
-    resource '*',
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  Rails.application.config.allowed_cors_origins.each do |origin_item| 
+    allow do
+      origins origin_item
+      resource '/api/v1/login', :headers => :any, :methods => [:post]
+      resource '/api/v1/tokens', :headers => :any, :methods => [:get]
+    end
   end
 end

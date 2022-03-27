@@ -28,9 +28,9 @@ class Api::V1::UsersController < ApplicationController
     head 204
   end
 
-  def admins
-    render json: User.all, status: :ok
-  end
+  #def admins
+  #  render json: User.all, status: :ok
+  #end
 
   private
 
