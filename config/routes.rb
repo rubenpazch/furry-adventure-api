@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
+  get 'menu/index'
   get "health/index"
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       #resources :users, only: [:show, :create, :update, :destroy]
       resources :login, only: [:create]
-      get "tokens", to: "tokens#verify"
+      post "tokens", to: "tokens#verify"
       #get "users", to: "users#admins"
+      resources :menu, only: [:index]
     end
   end
 

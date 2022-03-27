@@ -2,15 +2,15 @@ require "rails_helper"
 
 RSpec.describe "should get JWT token", type: :request do
   let(:valid_organization) { create(:organization) }
-    let(:valid_account) { build(:account) }
-    let(:existing_user_valid) { build(:user) }
+  let(:valid_account) { build(:account) }
+  let(:existing_user_valid) { build(:user) }
 
-    before(:each) do
-      valid_account.organizations_id = valid_organization.id
-      valid_account.save!
-      existing_user_valid.account_id = valid_account.id
-      existing_user_valid.save!
-    end
+  before(:each) do
+    valid_account.organizations_id = valid_organization.id
+    valid_account.save!
+    existing_user_valid.account_id = valid_account.id
+    existing_user_valid.save!
+  end
 
   it "should get JWT token" do
     headers = { "ACCEPT" => "application/json" }
