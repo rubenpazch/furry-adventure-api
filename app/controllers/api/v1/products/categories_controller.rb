@@ -13,7 +13,7 @@ class Api::V1::Products::CategoriesController < ApplicationController
            status: :ok
   end
 
-  private 
+  private
 
   def check_owner
     head :forbidden unless @product.account_id == current_user&.account_id

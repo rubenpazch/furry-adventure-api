@@ -6,14 +6,22 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-@organization_sulca = Organization.create(name: "Artexaperu", description: "Empresa de textiles peru")
-@account_sulca = Account.create(name: "Museo Sulca Textiles", organizations_id: @organization_sulca.id)
+@organization_sulca = Organization.create!(name: "Artexaperu", description: "Empresa de textiles peru")
+@account_sulca = Account.create!(name: "Museo Sulca Textiles", organizations_id: @organization_sulca.id)
 
-@global_organization = Organization.create(name: "Ruben Paz Chuspe", description: "Empresa de desarrollo")
-@global_account = Account.create(name: "administrators", organizations_id: @global_organization.id)
+@global_organization = Organization.create!(name: "Ruben Paz Chuspe", description: "Empresa de desarrollo")
+@global_account = Account.create!(name: "administrators", organizations_id: @global_organization.id)
 
-@daniel_organization =  Organization.create(name: "Daniel Cusihuaman", description: "Lunotopia")
-@daniel_account = Account.create(name: "Luneteria", organizations_id: @daniel_organization.id)
+@daniel_organization = Organization.create!(name: "Daniel Cusihuaman", description: "Lunotopia")
+@daniel_account = Account.create!(name: "Luneteria", organizations_id: @daniel_organization.id)
+
+@menu1 = Menu.create!(title: "MENU.ORDER", link_to: "/work-order", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
+@sub_menu11 = SubMenu.create!(title: "MENU.NEW", link_to: "/work-order/new", hasSubMenu: false, menus_id: @menu1.id)
+@sub_menu12 = SubMenu.create(title: "MENU.BUSCAR", link_to: "/work-order/find", hasSubMenu: false, menus_id: @menu1.id)
+
+@menu2 = Menu.create(title: "MENU.CLIENT", link_to: "/clients", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
+@sub_menu21 = SubMenu.create(title: "MENU.NEW", link_to: "/clients/new", hasSubMenu: false, menus_id: @menu2.id)
+@sub_menu22 = SubMenu.create(title: "MENU.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
 
 #profiles
 @admin_profile = Profile.create(name: "administrator")
@@ -28,7 +36,6 @@
 @sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false)
 #daniel user
 @daniel_admin = User.create(email: "daniel@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "daniel", last_name: "lentes", account_id: @daniel_account.id, isSuperAdmin: false)
-
 
 #Modules
 ModuleApp.create(name: "Tours", description: "Option to offer tours")
@@ -160,7 +167,7 @@ Product.create(
   slug_collection: @category1.slug,
   sale_price: 14,
   product_category_id: @category1.id,
-  account_id: @account_sulca.id
+  account_id: @account_sulca.id,
 )
 
 @category2 = Products::Category.create(

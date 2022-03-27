@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_21_040106) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_27_180412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -54,6 +54,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_040106) do
     t.datetime "updated_at", null: false
     t.bigint "job_organization_id", null: false
     t.index ["job_organization_id"], name: "index_jobs_on_job_organization_id"
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string "title"
+    t.string "link_to"
+    t.boolean "hasSubMenu"
+    t.boolean "isRoot"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_menus_on_account_id"
   end
 
   create_table "module_apps", force: :cascade do |t|
@@ -136,6 +147,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_040106) do
     t.index ["profile_id"], name: "index_roles_on_profile_id"
   end
 
+  create_table "sub_menus", force: :cascade do |t|
+    t.string "title"
+    t.string "link_to"
+    t.boolean "hasSubMenu"
+    t.bigint "menus_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menus_id"], name: "index_sub_menus_on_menus_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -151,8 +172,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_040106) do
 
   add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
+  add_foreign_key "menus", "accounts"
   add_foreign_key "product_categories", "accounts"
   add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
   add_foreign_key "products", "accounts"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "sub_menus", "menus", column: "menus_id"
 end
