@@ -1,10 +1,10 @@
 class Api::V1::MenuController < ApplicationController
   before_action :check_login, only: %i[index]
 
-  def index
+  def menusubmenu
     @menu = Menu.where(account_id: current_user.account_id)
     render json: @menu.to_json(
-             :only => [:title, :link_to, :hasSubMenu, :isRoot, :account_id],
+             :only => [:id, :title, :link_to, :hasSubMenu, :isRoot, :account_id],
              :include => {
                :sub_menus => { only: [:title, :link_to, :hasSubMenu, :menus_id] },
              },

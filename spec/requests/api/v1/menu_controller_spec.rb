@@ -34,7 +34,7 @@ RSpec.describe "Api::V1::Menu", type: :request do
     it "should return list of menus" do
       headers = { "ACCEPT" => "application/json",
                   "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
-      get "/api/v1/menu", headers: headers
+      post "/api/v1/menu", headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response[0]['title'] == menu1.title).to  be(true)

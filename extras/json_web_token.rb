@@ -7,7 +7,7 @@ class JsonWebToken
   end
   
   def self.decode(token)
-    decoded_token = JWT.decode(token, SECRET_KEY)
+    decoded_token = JWT.decode(token.split(' ').last, SECRET_KEY)
     decoded = decoded_token.first if decoded_token
     HashWithIndifferentAccess.new decoded
   end
