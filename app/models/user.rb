@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   belongs_to :account
+  #belongs_to :person, class_name: "person", foreign_key: "person_id"
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/, :message => "has incorrect format"
 
