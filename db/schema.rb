@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_27_180412) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_30_023627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -74,6 +74,47 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_27_180412) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "optometric_histories", force: :cascade do |t|
+    t.string "av_od_sc"
+    t.string "av_oi_sc"
+    t.string "av_od_cc"
+    t.string "av_oi_cc"
+    t.string "ph_od"
+    t.string "ph_oi"
+    t.string "k_od"
+    t.string "k_oi"
+    t.string "ret_od"
+    t.string "ret_oi"
+    t.string "rx_sph_od"
+    t.string "rx_sph_oi"
+    t.string "rx_cyl_od"
+    t.string "rx_cyl_oi"
+    t.string "rx_eje_od"
+    t.string "rx_eje_oi"
+    t.string "rx_dip_od"
+    t.string "rx_dip_oi"
+    t.string "mot_ocular"
+    t.string "cover_test"
+    t.string "kappa_od"
+    t.string "kappa_oi"
+    t.string "hirschberg"
+    t.string "rpupilares_fotom"
+    t.string "rpupilares_consensual"
+    t.string "rpupilares_acomodativo"
+    t.string "dnp_od"
+    t.string "dnp_oi"
+    t.string "av_od"
+    t.string "av_oi"
+    t.string "a_v_ao_od"
+    t.string "a_v_ao_oi"
+    t.string "cerca_add_od"
+    t.string "cerca_add_oi"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "people_id", null: false
+    t.index ["people_id"], name: "index_optometric_histories_on_people_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -86,6 +127,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_27_180412) do
     t.integer "district"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "doc_id"
+    t.string "address"
+    t.string "cell_phone"
+    t.string "contact_phone"
+    t.integer "district"
+    t.integer "province"
+    t.integer "deparment"
+    t.integer "country"
+    t.string "nationality"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "age"
+    t.string "ocupation"
   end
 
   create_table "privileges", force: :cascade do |t|
@@ -173,6 +232,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_27_180412) do
   add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
   add_foreign_key "menus", "accounts"
+  add_foreign_key "optometric_histories", "people", column: "people_id"
   add_foreign_key "product_categories", "accounts"
   add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
   add_foreign_key "products", "accounts"
