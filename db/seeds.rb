@@ -16,12 +16,12 @@
 @daniel_account = Account.create!(name: "Luneteria", organizations_id: @daniel_organization.id)
 
 @menu1 = Menu.create!(title: "MENU.ORDER", link_to: "/work-order", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
-@sub_menu11 = SubMenu.create!(title: "MENU.NEW", link_to: "/work-order/new", hasSubMenu: false, menus_id: @menu1.id)
-@sub_menu12 = SubMenu.create(title: "MENU.BUSCAR", link_to: "/work-order/find", hasSubMenu: false, menus_id: @menu1.id)
+@sub_menu11 = SubMenu.create!(title: "MENU.ORDER.NEW", link_to: "/work-order/new", hasSubMenu: false, menus_id: @menu1.id)
+@sub_menu12 = SubMenu.create(title: "MENU.ORDER.BUSCAR", link_to: "/work-order/find", hasSubMenu: false, menus_id: @menu1.id)
 
 @menu2 = Menu.create(title: "MENU.CLIENT", link_to: "/clients", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
-@sub_menu21 = SubMenu.create(title: "MENU.NEW", link_to: "/clients/new", hasSubMenu: false, menus_id: @menu2.id)
-@sub_menu22 = SubMenu.create(title: "MENU.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
+@sub_menu21 = SubMenu.create(title: "MENU.CLIENT.NEW", link_to: "/clients/new", hasSubMenu: false, menus_id: @menu2.id)
+@sub_menu22 = SubMenu.create(title: "MENU.CLIENT.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
 
 #profiles
 @admin_profile = Profile.create(name: "administrator")
@@ -44,15 +44,11 @@ ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 
 #CreateRoles
 @superAdmin = Role.create(name: "SuperAdministrator", profile_id: @admin_profile.id, is_root: true, parent_id: 0)
-
 @admin = Role.create(name: "Admin", profile_id: @manager_profile.id, is_root: false, parent_id: @superAdmin.id)
-
 @owner = Role.create(name: "Owner", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
 @itsupport = Role.create(name: "IT support", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
 @salesmanager = Role.create(name: "Sales Manager", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id)
-
 @salesman = Role.create(name: "Salesman", profile_id: @manager_profile.id, is_root: false, parent_id: @salesmanager.id)
-
 @traveler = Role.create(name: "Traveler", profile_id: @sales_tours.id, is_root: false, parent_id: @salesman.id)
 @client = Role.create(name: "Client", profile_id: @sales_tours.id, is_root: false, parent_id: @salesman.id)
 
@@ -60,6 +56,12 @@ ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 @privilegeManageUser = Privilege.create(name: "Manage Users")
 @privilegeManageTours = Privilege.create(name: "Manage Tours")
 @privilegeManageRestaurant = Privilege.create(name: "Manage Restaurants")
+@privilegeManageOrders = Privilege.create(name: "Manage Orders")
+@privilegeManageOrdersNew = Privilege.create(name: "Create Orders")
+@privilegeManageOrdersSearch = Privilege.create(name: "Search Orders")
+@privilegeManageClient = Privilege.create(name: "Manage Cliente")
+@privilegeManageClientNew = Privilege.create(name: "Create Clients")
+@privilegeManageClientSearch = Privilege.create(name: "Search Clients")
 
 AccessPrivilege.create(profile_id: @admin_profile.id, privilege_id: @privilegeManageUser.id)
 AccessPrivilege.create(profile_id: @manager_profile.id, privilege_id: @privilegeManageUser.id)

@@ -1,5 +1,23 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Privilege, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "privilege creation" do
+    let(:manage_users) { create :privilege }
+    let(:manage_users_sub_item_one) { create :privilege }
+    let(:manage_users_sub_item_two) { create :privilege }
+
+    describe "user management" do
+      it "has a valid privilege" do
+        expect(manage_users).to be_valid
+      end
+
+      it "has a valid privilege" do
+        expect(manage_users_sub_item_one).to be_valid
+      end
+
+      it "has a valid privilege" do
+        expect(manage_users_sub_item_two).to be_valid
+      end
+    end
+  end
 end
