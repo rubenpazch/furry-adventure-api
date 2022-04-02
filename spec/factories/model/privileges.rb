@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :privilege do
-    name { "MyString" }
+    name { Faker::Lorem.word }
   end
 end

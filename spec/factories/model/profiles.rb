@@ -1,5 +1,5 @@
-FactoryBot.define do 
-  factory :profile do 
-    name { "Admin" }
+FactoryBot.define do
+  factory :profile do
+    name { Faker::Lorem.word }
   end
 end

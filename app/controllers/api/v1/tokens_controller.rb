@@ -4,6 +4,8 @@ class Api::V1::TokensController < ApplicationController
     @decodedToken = JsonWebToken.decode(@authorization)
     @user_id = @decodedToken['user_id'] if @decodedToken
     @user = User.find(@user_id)
+    @menu = Menu.where(account_id: @user.account_id)
+
     if @user
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),
@@ -11,7 +13,8 @@ class Api::V1::TokensController < ApplicationController
         email: @user.email,
         first_name: @user.first_name,
         last_name: @user.last_name,
-        id: @user.id,  
+        id: @user.id,
+        menu: @menu,
       }
     else
       head :unauthorized
