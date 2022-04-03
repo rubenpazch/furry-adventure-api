@@ -1,3 +1,4 @@
 class Privilege < ApplicationRecord
-  has_and_belongs_to_many :profiles
+  has_many :access_privileges, class_name: "AccessPrivilege", foreign_key: "privilege_id"
+  has_many :profiles, through: :access_privileges
 end

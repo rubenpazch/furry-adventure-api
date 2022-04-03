@@ -16,10 +16,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
   enable_extension "plpgsql"
 
   create_table "access_privileges", force: :cascade do |t|
-    t.uuid "profile_id"
-    t.integer "privilege_id"
+    t.bigint "profile_id"
+    t.bigint "privilege_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["privilege_id"], name: "index_access_privileges_on_privilege_id"
+    t.index ["profile_id"], name: "index_access_privileges_on_profile_id"
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -190,7 +192,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
-  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "profiles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -231,6 +233,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "access_privileges", "privileges"
+  add_foreign_key "access_privileges", "profiles"
   add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
   add_foreign_key "menus", "accounts"
