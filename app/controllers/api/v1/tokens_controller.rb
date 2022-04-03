@@ -4,7 +4,7 @@ class Api::V1::TokensController < ApplicationController
     @decodedToken = JsonWebToken.decode(@authorization)
     @user_id = @decodedToken['user_id'] if @decodedToken
     @user = User.find(@user_id)
-    @menu = Menu.where(account_id: @user.account_id)
+    @menu = @user.account.roles
 
     if @user
       render json: {

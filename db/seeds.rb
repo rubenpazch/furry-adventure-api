@@ -38,15 +38,6 @@ Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu1.i
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu2.id)
 Profiles::MenuAccess.create!(profile_id: @sales_profile.id, menus_id: @menu2.id)
 
-#super admin user
-@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true)
-#basic user
-@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user", account_id: @global_account.id, isSuperAdmin: false)
-#sulca user
-@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false)
-#daniel user
-@daniel_admin = User.create(email: "daniel@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "daniel", last_name: "lentes", account_id: @daniel_account.id, isSuperAdmin: false)
-
 #Modules
 ModuleApp.create(name: "Tours", description: "Option to offer tours")
 ModuleApp.create(name: "Restaurant", description: "Option to offer tours")
@@ -59,6 +50,15 @@ ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 @itsupport = Profiles::Role.create!(name: "IT support Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
 @salesmanager = Profiles::Role.create!(name: "Sales Manager Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
 @client = Profiles::Role.create!(name: "Client Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @salesmanager.id, account_id: @daniel_account.id)
+
+#super admin user
+@user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true, role_id: @superAdmin.id)
+#basic user
+@user_basic = User.create(email: "basic@testing.com", password: "CuscoPeru123.", first_name: "basic", last_name: "user", account_id: @global_account.id, isSuperAdmin: false, role_id: @owner.id)
+#sulca user
+@sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false, role_id: @owner.id)
+#daniel user
+@daniel_admin = User.create(email: "daniel@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "daniel", last_name: "lentes", account_id: @daniel_account.id, isSuperAdmin: false, role_id: @owner.id)
 
 #privileges
 @privilegeManageUser = Profiles::Privilege.create(name: "Manage Users")

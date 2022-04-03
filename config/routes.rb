@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       #resources :users, only: [:show, :create, :update, :destroy]
       resources :login, only: [:create]
-      post "tokens", to: "tokens#verify"
+      get "tokens", to: "tokens#verify"
       post "menu", to: "menu#menusubmenu"
       #get "users", to: "users#admins"
       #resources :menu, only: [:index]

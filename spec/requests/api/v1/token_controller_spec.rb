@@ -20,7 +20,7 @@ RSpec.describe "should get JWT token", type: :request do
         "ACCEPT" => "application/json",
         "Authorization" => @token,
       }
-      post "/api/v1/tokens", headers: headers
+      get "/api/v1/tokens", headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response["username"]).not_to be_nil
