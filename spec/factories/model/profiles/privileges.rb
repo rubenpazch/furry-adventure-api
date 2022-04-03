@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :privilege do
+  factory :privilege, :class => Profiles::Privilege do
     name { Faker::Lorem.word }
   end
 end

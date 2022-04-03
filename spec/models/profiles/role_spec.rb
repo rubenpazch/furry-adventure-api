@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Role, type: :model do
+RSpec.describe Profiles::Role, type: :model do
   context "role creation" do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }

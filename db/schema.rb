@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_03_174818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -56,6 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
     t.datetime "updated_at", null: false
     t.bigint "job_organization_id", null: false
     t.index ["job_organization_id"], name: "index_jobs_on_job_organization_id"
+  end
+
+  create_table "menu_accesses", force: :cascade do |t|
+    t.bigint "menus_id"
+    t.bigint "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menus_id"], name: "index_menu_accesses_on_menus_id"
+    t.index ["profile_id"], name: "index_menu_accesses_on_profile_id"
   end
 
   create_table "menus", force: :cascade do |t|
@@ -198,6 +207,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "profiles_menu_accesses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.bigint "profile_id"
@@ -237,6 +251,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_171006) do
   add_foreign_key "access_privileges", "profiles"
   add_foreign_key "accounts", "organizations", column: "organizations_id"
   add_foreign_key "jobs", "job_organizations"
+  add_foreign_key "menu_accesses", "menus", column: "menus_id"
+  add_foreign_key "menu_accesses", "profiles"
   add_foreign_key "menus", "accounts"
   add_foreign_key "optometric_histories", "people", column: "people_id"
   add_foreign_key "product_categories", "accounts"

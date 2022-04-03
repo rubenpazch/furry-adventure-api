@@ -15,19 +15,28 @@
 @daniel_organization = Organization.create!(name: "Daniel Cusihuaman", description: "Lunotopia")
 @daniel_account = Account.create!(name: "Luneteria", organizations_id: @daniel_organization.id)
 
-@menu1 = Menu.create!(title: "MENU.ORDER", link_to: "/work-order", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
-@sub_menu11 = SubMenu.create!(title: "MENU.ORDER.NEW", link_to: "/work-order/new", hasSubMenu: false, menus_id: @menu1.id)
-@sub_menu12 = SubMenu.create(title: "MENU.ORDER.BUSCAR", link_to: "/work-order/find", hasSubMenu: false, menus_id: @menu1.id)
+@menu1 = Profiles::Menu.create!(title: "MENU.ORDER", link_to: "/work-order", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
+@sub_menu11 = Profiles::SubMenu.create!(title: "MENU.ORDER.NEW", link_to: "/work-order/new", hasSubMenu: false, menus_id: @menu1.id)
+@sub_menu12 = Profiles::SubMenu.create(title: "MENU.ORDER.BUSCAR", link_to: "/work-order/find", hasSubMenu: false, menus_id: @menu1.id)
 
-@menu2 = Menu.create(title: "MENU.CLIENT", link_to: "/clients", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
-@sub_menu21 = SubMenu.create(title: "MENU.CLIENT.NEW", link_to: "/clients/new", hasSubMenu: false, menus_id: @menu2.id)
-@sub_menu22 = SubMenu.create(title: "MENU.CLIENT.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
+@menu2 = Profiles::Menu.create!(title: "MENU.CLIENT", link_to: "/clients", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
+@sub_menu21 = Profiles::SubMenu.create!(title: "MENU.CLIENT.NEW", link_to: "/clients/new", hasSubMenu: false, menus_id: @menu2.id)
+@sub_menu22 = Profiles::SubMenu.create!(title: "MENU.CLIENT.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
 
 #profiles
 @super_admin_profile = Profile.create!(name: "super administrator")
 @admin_profile = Profile.create!(name: "administrator")
 @manager_profile = Profile.create!(name: "manager")
 @sales_profile = Profile.create!(name: "salesman")
+
+#menu access
+Profiles::MenuAccess.create!(profile_id: @super_admin_profile.id, menus_id: @menu1.id)
+Profiles::MenuAccess.create!(profile_id: @super_admin_profile.id, menus_id: @menu2.id)
+Profiles::MenuAccess.create!(profile_id: @admin_profile.id, menus_id: @menu1.id)
+Profiles::MenuAccess.create!(profile_id: @admin_profile.id, menus_id: @menu2.id)
+Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu1.id)
+Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu2.id)
+Profiles::MenuAccess.create!(profile_id: @sales_profile.id, menus_id: @menu2.id)
 
 #super admin user
 @user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true)
@@ -44,46 +53,40 @@ ModuleApp.create(name: "Restaurant", description: "Option to offer tours")
 ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 
 #CreateRoles
-@superAdmin = Role.create!(name: "SuperAdministrator", profile_id: @super_admin_profile.id, is_root: true, parent_id: 0, account_id: @global_account.id)
-@admin = Role.create!(name: "Admin", profile_id: @admin_profile.id, is_root: false, parent_id: @superAdmin.id, account_id: @global_account.id)
-@owner = Role.create!(name: "Owner Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
-@itsupport = Role.create!(name: "IT support Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
-@salesmanager = Role.create!(name: "Sales Manager Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
-@client = Role.create!(name: "Client Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @salesmanager.id, account_id: @daniel_account.id)
+@superAdmin = Profiles::Role.create!(name: "SuperAdministrator", profile_id: @super_admin_profile.id, is_root: true, parent_id: 0, account_id: @global_account.id)
+@admin = Profiles::Role.create!(name: "Admin", profile_id: @admin_profile.id, is_root: false, parent_id: @superAdmin.id, account_id: @global_account.id)
+@owner = Profiles::Role.create!(name: "Owner Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
+@itsupport = Profiles::Role.create!(name: "IT support Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
+@salesmanager = Profiles::Role.create!(name: "Sales Manager Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
+@client = Profiles::Role.create!(name: "Client Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @salesmanager.id, account_id: @daniel_account.id)
 
 #privileges
-@privilegeManageUser = Privilege.create(name: "Manage Users")
+@privilegeManageUser = Profiles::Privilege.create(name: "Manage Users")
 #----------orders
-@privilegeManageOrders = Privilege.create(name: "Manage Orders")
-@privilegeManageOrdersNew = Privilege.create(name: "Create Orders")
-@privilegeManageOrdersSearch = Privilege.create(name: "Search Orders")
+@privilegeManageOrders = Profiles::Privilege.create(name: "Manage Orders")
+@privilegeManageOrdersNew = Profiles::Privilege.create(name: "Create Orders")
+@privilegeManageOrdersSearch = Profiles::Privilege.create(name: "Search Orders")
 #----------clients
-@privilegeManageClient = Privilege.create(name: "Manage Cliente")
-@privilegeManageClientNew = Privilege.create(name: "Create Clients")
-@privilegeManageClientSearch = Privilege.create(name: "Search Clients")
+@privilegeManageClient = Profiles::Privilege.create(name: "Manage Cliente")
+@privilegeManageClientNew = Profiles::Privilege.create(name: "Create Clients")
+@privilegeManageClientSearch = Profiles::Privilege.create(name: "Search Clients")
 
-puts @super_admin_profile.id
 #Access Privileges
-AccessPrivilege.create!(profile_id: @super_admin_profile.id, privilege_id: @privilegeManageUser.id)
+Profiles::AccessPrivilege.create!(profile_id: @super_admin_profile.id, privilege_id: @privilegeManageUser.id)
 
-AccessPrivilege.create!(profile_id: @admin_profile.id, privilege_id: @privilegeManageUser.id)
+Profiles::AccessPrivilege.create!(profile_id: @admin_profile.id, privilege_id: @privilegeManageUser.id)
 
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrders.id)
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrdersNew.id)
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrdersSearch.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrders.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrdersNew.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageOrdersSearch.id)
 
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClient.id)
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClientNew.id)
-AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClientSearch.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClient.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClientNew.id)
+Profiles::AccessPrivilege.create!(profile_id: @manager_profile.id, privilege_id: @privilegeManageClientSearch.id)
 
-AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrders.id)
-AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrdersNew.id)
-AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrdersSearch.id)
-
-#Permission.create(name: 'Create')
-#Permission.create(name: 'Edit')
-#Permission.create(name: 'View')
-#Permission.create(name: 'Delete')
+Profiles::AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrders.id)
+Profiles::AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrdersNew.id)
+Profiles::AccessPrivilege.create!(profile_id: @sales_profile.id, privilege_id: @privilegeManageOrdersSearch.id)
 
 @jo1 = Jobs::Organization.create(
   title: Faker::Company.name,

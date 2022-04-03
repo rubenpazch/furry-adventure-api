@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Privilege, type: :model do
+RSpec.describe Profiles::Privilege, type: :model do
   context "privilege creation" do
     let(:manage_users) { create :privilege }
     let(:manage_users_sub_item_one) { create :privilege }

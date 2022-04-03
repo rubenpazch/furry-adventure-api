@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AccessPrivilege, type: :model do
+RSpec.describe Profiles::AccessPrivilege, type: :model do
   context "access privilege creation" do
     let(:manage_users_super_admin) { build :access_privilege }
     let(:manage_users_super_admin_create) { build :access_privilege }
