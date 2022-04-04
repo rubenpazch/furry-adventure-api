@@ -1,5 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Profiles::SubMenu, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "create sub-menu" do
+    let(:valid_menu_admin) { build(:sub_menus) }
+    let(:valid_menu_owner) { build(:sub_menus) }
+    let(:valid_menu_sales) { build(:sub_menus) }
+
+    before(:each) do
+      valid_menu_admin.save!
+    end
+
+    it "valid sub-menu" do
+    end
+  end
 end
