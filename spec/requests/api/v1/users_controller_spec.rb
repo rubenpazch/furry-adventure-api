@@ -2,20 +2,29 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Users", type: :request do
   context "GET /index" do
+    let(:role_owner) { build(:role) }
     let(:user_valid) { build(:user) }
+    let(:profile_owner) { create(:profile) }
     let(:valid_organization) { create(:organization) }
     let(:valid_account) { build(:account) }
 
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
       user_valid.account_id = valid_account.id
+      user_valid.role_id = role_owner.id
       user_valid.save!
     end
 
     it "should show user" do
-      headers = { "ACCEPT" => "application/json" }
-      get "/api/v1/users/#{user_valid.id}"
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_valid.id) }
+      get "/api/v1/users/#{user_valid.id}", :headers => headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response["email"]).to eq(user_valid.email)
@@ -23,6 +32,8 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 
   context "POST /created" do
+    let(:role_owner) { build(:role) }
+    let(:profile_owner) { create(:profile) }
     let(:user_valid) { build(:user) }
     let(:valid_organization) { create(:organization) }
     let(:valid_account) { build(:account) }
@@ -31,12 +42,19 @@ RSpec.describe "Api::V1::Users", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
-      existing_user_valid.account_id = valid_account.id
-      existing_user_valid.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
+      #existing_user_valid.account_id = valid_account.id
+      #existing_user_valid.role_id = role_owner.id
+      #existing_user_valid.save!
     end
 
     it "should create a user" do
-      headers = { "ACCEPT" => "application/json" }
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_valid.id) }
       post "/api/v1/users", :params => {
                               :user => {
                                 :email => user_valid.email,
@@ -44,13 +62,15 @@ RSpec.describe "Api::V1::Users", type: :request do
                                 :first_name => user_valid.first_name,
                                 :last_name => user_valid.last_name,
                                 :account_id => valid_account.id,
+                                :role_id => role_owner.id,
                               },
                             }, :headers => headers, as: :json
       expect(response).to have_http_status(:created)
     end
 
     it "should not create user with taken email" do
-      headers = { "ACCEPT" => "application/json" }
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_valid.id) }
       post "/api/v1/users", :params => {
                               :user => {
                                 :email => existing_user_valid.email,
@@ -65,6 +85,8 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 
   context "UPDATE /updated" do
+    let(:role_owner) { build(:role) }
+    let(:profile_owner) { create(:profile) }
     let(:valid_organization) { create(:organization) }
     let(:valid_account) { build(:account) }
     let(:existing_user_valid) { build(:user) }
@@ -72,7 +94,13 @@ RSpec.describe "Api::V1::Users", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
       existing_user_valid.account_id = valid_account.id
+      existing_user_valid.role_id = role_owner.id
       existing_user_valid.save!
     end
 
@@ -107,6 +135,8 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 
   context "DELETE /deleted" do
+    let(:role_owner) { build(:role) }
+    let(:profile_owner) { create(:profile) }
     let(:valid_organization) { create(:organization) }
     let(:valid_account) { build(:account) }
     let(:existing_user_valid) { build(:user) }
@@ -114,7 +144,13 @@ RSpec.describe "Api::V1::Users", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
       existing_user_valid.account_id = valid_account.id
+      existing_user_valid.role_id = role_owner.id
       existing_user_valid.save!
     end
 

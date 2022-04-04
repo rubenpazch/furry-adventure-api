@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      #resources :users, only: [:show, :create, :update, :destroy]
+      resources :users, only: [:show, :create, :update, :destroy]
       resources :login, only: [:create]
       get "tokens", to: "tokens#verify"
       post "menu", to: "menu#menusubmenu"

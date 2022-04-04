@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action :check_login
   before_action :check_owner, only: %i[update destroy]
 
   def show
@@ -35,7 +36,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :password, :account_id)
+    params.require(:user).permit(:email, :first_name, :last_name, :password, :account_id, :role_id)
   end
 
   def set_user
