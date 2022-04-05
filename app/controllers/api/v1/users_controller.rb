@@ -2,6 +2,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :check_login
   before_action :check_owner, only: %i[update destroy]
+  before_action :check_current_user, only: [:index]
 
   def show
     render json: @user
@@ -29,6 +30,10 @@ class Api::V1::UsersController < ApplicationController
     head 204
   end
 
+  def index
+    render json: User.users_by_account(@user.account_id)
+  end
+
   #def admins
   #  render json: User.all, status: :ok
   #end
@@ -45,5 +50,16 @@ class Api::V1::UsersController < ApplicationController
 
   def check_owner
     head :forbidden unless @user.id == current_user&.id
+  end
+
+  def check_current_user
+    @authorization = get_token(request.headers["Authorization"])
+    @decodedToken = JsonWebToken.decode(@authorization)
+    @user_id = @decodedToken["user_id"] if @decodedToken
+    @user = User.find(@user_id)
+  end
+
+  def get_token(str)
+    str.split(" ").last
   end
 end

@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Menu", type: :request do
   context "GET /index" do
+    let(:valid_role) { build(:role) }
+    let(:valid_profile) { create(:profile) }
     let(:valid_account) { build :account }
     let(:valid_organization) { create :organization }
     let(:valid_user) { build :user }
@@ -15,8 +17,15 @@ RSpec.describe "Api::V1::Menu", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+      
+      valid_role.account_id = valid_account.id
+      valid_role.profile_id = valid_profile.id
+      valid_role.save!
+
       valid_user.account_id = valid_account.id
+      valid_user.role_id = valid_role.id
       valid_user.save!
+      
       menu1.account_id = valid_account.id
       menu1.save!
       sub_menu11.menus_id = menu1.id

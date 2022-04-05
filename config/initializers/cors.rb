@@ -10,8 +10,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins origin_item
       resource '/api/v1/login', :headers => :any, :methods => [:post]
-      resource '/api/v1/tokens', :headers => :any, :methods => [:post]
+      resource '/api/v1/tokens', :headers => :any, :methods => [:get]
       resource '/api/v1/menu', :headers => :any, :methods => [:post]
+      resource '/api/v1/users', :headers => :any, :methods => [:post, :index, :get, :patch]
     end
   end
 end

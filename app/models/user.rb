@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  scope :users_by_account, ->(account_id) { where('account_id = ?', account_id) }
+
   def is_super_admin?
     isSuperAdmin?
   end

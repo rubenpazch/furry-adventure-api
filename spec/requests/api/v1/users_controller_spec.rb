@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Api::V1::Users", type: :request do
-  context "GET /index" do
+  context "GET /show" do
     let(:role_owner) { build(:role) }
     let(:user_valid) { build(:user) }
     let(:profile_owner) { create(:profile) }
@@ -169,6 +169,36 @@ RSpec.describe "Api::V1::Users", type: :request do
       }
       delete "/api/v1/users/#{existing_user_valid.id}", :headers => headers, as: :json
       expect(response).to have_http_status(:forbidden)
+    end
+  end
+
+  context "GET /index" do
+    let(:role_owner) { build(:role) }
+    let(:user_valid) { build(:user) }
+    let(:profile_owner) { create(:profile) }
+    let(:valid_organization) { create(:organization) }
+    let(:valid_account) { build(:account) }
+
+    before(:each) do
+      valid_account.organizations_id = valid_organization.id
+      valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
+      user_valid.account_id = valid_account.id
+      user_valid.role_id = role_owner.id
+      user_valid.save!
+    end
+
+    it "should show user" do
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_valid.id) }
+      get "/api/v1/users", :headers => headers
+      expect(response).to have_http_status(:ok)
+      #json_response = JSON.parse(response.body)
+      #expect(json_response["email"]).to eq(user_valid.email)
     end
   end
 end
