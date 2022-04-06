@@ -40,6 +40,7 @@ Profiles::MenuAccess.create!(profile_id: @admin_profile.id, menus_id: @menu1.id)
 Profiles::MenuAccess.create!(profile_id: @admin_profile.id, menus_id: @menu2.id)
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu1.id)
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu2.id)
+Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu3.id)
 Profiles::MenuAccess.create!(profile_id: @sales_profile.id, menus_id: @menu2.id)
 
 #Modules
