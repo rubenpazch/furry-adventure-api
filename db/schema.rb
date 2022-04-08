@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_06_080106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -244,6 +244,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
     t.bigint "account_id"
     t.boolean "isSuperAdmin"
     t.bigint "role_id", null: false
+    t.string "name"
+    t.string "avatar"
+    t.date "last_login"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"

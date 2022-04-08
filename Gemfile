@@ -55,4 +55,6 @@ gem "pry-byebug", "~> 3.9.0"
 
 gem 'net-smtp', require: false
 
-gem "jsonapi-rails", "~> 0.4.0"
+gem "jsonapi-serializer", "~> 2.2"
+
+gem "kaminari", "~> 1.2"

@@ -15,13 +15,19 @@ class User < ApplicationRecord
   /x
 
   validates :password_digest, presence: true, format: { with: PASSWORD_FORMAT }
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :name, presence: true, uniqueness: true
+
+  before_validation do
+    self.name = "#{self.first_name} #{self.last_name}"
+  end
 
   has_secure_password
 
-  scope :users_by_account, ->(account_id) { where('account_id = ?', account_id) }
+  scope :users_by_account, ->(account_id) { where("account_id = ?", account_id) }
 
   def is_super_admin?
     isSuperAdmin?
   end
-
 end
