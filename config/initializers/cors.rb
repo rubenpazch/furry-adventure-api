@@ -13,6 +13,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       resource '/api/v1/tokens', :headers => :any, :methods => [:get]
       resource '/api/v1/menu', :headers => :any, :methods => [:post]
       resource '/api/v1/users', :headers => :any, :methods => [:post, :index, :get, :patch]
+      resource '/api/v1/products/categories', :headers => :any, :methods => [:get]
     end
   end
 end
