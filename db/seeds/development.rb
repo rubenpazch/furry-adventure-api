@@ -201,7 +201,7 @@ Job.create(
   product_categories_id: @category1.id,
 )
 
-Product.create(
+@product1 = Product.create(
   title: "Tapiz Wari Images Zoomorfas",
   price: 12,
   published: true,
@@ -211,6 +211,18 @@ Product.create(
   sale_price: 14,
   product_category_id: @category1.id,
   account_id: @account_sulca.id,
+)
+
+@product1_image1 = Products::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  original: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  product_id: @product1.id,
+)
+
+@product1_image2 = Products::Image.create(
+  thumbnail: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  original: "/assets/images/category/tapices/tapices-inca-300x300.jpg",
+  product_id: @product1.id,
 )
 
 @category2 = Products::Category.create(

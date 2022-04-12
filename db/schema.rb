@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_11_213413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -185,6 +185,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
     t.index ["product_categories_id"], name: "index_product_category_images_on_product_categories_id"
   end
 
+  create_table "product_images", force: :cascade do |t|
+    t.string "thumbnail"
+    t.string "original"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_images_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "title"
     t.decimal "price"
@@ -197,6 +206,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
     t.bigint "product_category_id", null: false
     t.bigint "account_id", null: false
     t.string "slug_collection"
+    t.string "name"
+    t.integer "quantity"
+    t.string "sku"
+    t.string "image"
     t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
@@ -244,6 +257,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
     t.bigint "account_id"
     t.boolean "isSuperAdmin"
     t.bigint "role_id", null: false
+    t.string "name"
+    t.string "avatar"
+    t.date "last_login"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
@@ -259,6 +275,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_03_213914) do
   add_foreign_key "optometric_histories", "people", column: "people_id"
   add_foreign_key "product_categories", "accounts"
   add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
+  add_foreign_key "product_images", "products"
   add_foreign_key "products", "accounts"
   add_foreign_key "products", "product_categories"
   add_foreign_key "roles", "accounts"

@@ -27,7 +27,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       get "/api/v1/users/#{user_valid.id}", :headers => headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["email"]).to eq(user_valid.email)
+      expect(json_response["data"]["attributes"]["email"]).to eq(user_valid.email)
     end
   end
 
@@ -174,31 +174,44 @@ RSpec.describe "Api::V1::Users", type: :request do
 
   context "GET /index" do
     let(:role_owner) { build(:role) }
-    let(:user_valid) { build(:user) }
+    let(:role_sales) { build(:role) }
+    let(:user_sales) { build(:user) }
+    let(:user_owner) { build(:user) }
     let(:profile_owner) { create(:profile) }
-    let(:valid_organization) { create(:organization) }
-    let(:valid_account) { build(:account) }
+    let(:profile_sales) { create(:profile) }
+    let(:organization_owner) { create(:organization) }
+    let(:account_owner) { build(:account) }
 
     before(:each) do
-      valid_account.organizations_id = valid_organization.id
-      valid_account.save!
+      account_owner.organizations_id = organization_owner.id
+      account_owner.save!
 
-      role_owner.account_id = valid_account.id
+      role_owner.account_id = account_owner.id
       role_owner.profile_id = profile_owner.id
       role_owner.save!
 
-      user_valid.account_id = valid_account.id
-      user_valid.role_id = role_owner.id
-      user_valid.save!
+      role_sales.account_id = account_owner.id
+      role_sales.profile_id = profile_sales.id
+      role_sales.save!
+
+      user_owner.account_id = account_owner.id
+      user_owner.role_id = role_owner.id
+      user_owner.save!
+
+      user_sales.account_id = account_owner.id
+      user_sales.role_id = role_sales.id
+      user_sales.save!
     end
 
     it "should show user" do
       headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_valid.id) }
-      get "/api/v1/users", :headers => headers
+                  "Authorization" => JsonWebToken.encode(user_id: user_owner.id) }
+      params = { :page => "1", :per_page => "1", format: :json }
+      get "/api/v1/users", :params => params, :headers => headers
       expect(response).to have_http_status(:ok)
-      #json_response = JSON.parse(response.body)
-      #expect(json_response["email"]).to eq(user_valid.email)
+      json_response = JSON.parse(response.body)
+      expect(json_response["data"][0]["attributes"]["email"]).to eq(user_owner.email)
+      expect(json_response["data"].length).to eq(2)
     end
   end
 end

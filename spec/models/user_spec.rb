@@ -19,6 +19,7 @@ RSpec.describe User, :type => :model do
 
       user_valid.account_id = valid_account.id
       user_valid.role_id = role_super_admin.id
+      user_valid.save!
     end
 
     it "is has valid attributes" do
@@ -136,11 +137,11 @@ RSpec.describe User, :type => :model do
     end
 
     it "should return a list of users by account one" do
-      expect(User.users_by_account(account_one.id).length).to match(3) 
+      expect(User.users_by_account(account_one.id).length).to match(3)
     end
 
     it "should return a list of users by account one" do
-      expect(User.users_by_account(account_two.id).length).to match(3) 
+      expect(User.users_by_account(account_two.id).length).to match(3)
     end
   end
 end

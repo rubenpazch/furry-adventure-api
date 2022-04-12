@@ -5,7 +5,8 @@ class Api::V1::UsersController < ApplicationController
   before_action :check_current_user, only: [:index]
 
   def show
-    render json: @user
+    json_string = UserSerializer.new(@user).serializable_hash.to_json
+    render json: json_string
   end
 
   def create
@@ -31,7 +32,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def index
-    render json: User.users_by_account(@user.account_id)
+    binding.pry
+    @result = User.page(params[:page]).per(params[:per_page]).search(params)
+    json_string = UserSerializer.new(@result).serializable_hash.to_json
+    render json: json_string
   end
 
   #def admins

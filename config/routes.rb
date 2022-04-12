@@ -5,6 +5,10 @@ Rails.application.routes.draw do
       resources :login, only: [:create]
       get "tokens", to: "tokens#verify"
       post "menu", to: "menu#menusubmenu"
+      namespace :products do
+        resources :categories, only: [:index]
+      end
+      resources :products, only: [:index, :show, :create, :update]
       #get "users", to: "users#admins"
       #resources :menu, only: [:index]
     end
