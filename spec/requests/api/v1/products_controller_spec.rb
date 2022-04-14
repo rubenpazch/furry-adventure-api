@@ -4,13 +4,17 @@ RSpec.describe "Api::V1::Products", type: :request do
   context "GET /index" do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
-    let(:valid_category) { create :products_category }
+    let(:valid_category) { build :products_category }
     let(:valid_product) { build :product }
     let(:valid_product_two) { build :product }
 
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      valid_category.account_id = valid_account.id
+      valid_category.save!
+
       valid_product.account_id = valid_account.id
       valid_product.product_category_id = valid_category.id
       valid_product.save!
@@ -38,9 +42,11 @@ RSpec.describe "Api::V1::Products", type: :request do
   end
 
   context "POST /create" do
+    let(:profile_owner) { create(:profile) }
+    let(:role_owner) { build(:role) }
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
-    let(:valid_category) { create :products_category }
+    let(:valid_category) { build :products_category }
     let(:valid_product) { build :product }
     let(:valid_product_two) { build :product }
     let(:valid_user) { build :user }
@@ -48,10 +54,19 @@ RSpec.describe "Api::V1::Products", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
+      valid_category.account_id = valid_account.id
+      valid_category.save!
+
       valid_product_two.account_id = valid_account.id
       valid_product_two.product_category_id = valid_category.id
       valid_product_two.save!
       valid_user.account_id = valid_account.id
+      valid_user.role_id = role_owner.id
       valid_user.save!
     end
 
@@ -93,10 +108,12 @@ RSpec.describe "Api::V1::Products", type: :request do
     end
   end
 
-  context "PATCH /update" do 
+  context "PATCH /update" do
+    let(:profile_owner) { create(:profile) }
+    let(:role_owner) { build(:role) }
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
-    let(:valid_category) { create :products_category }
+    let(:valid_category) { build :products_category }
     let(:valid_product) { build :product }
     let(:valid_product_two) { build :product }
     let(:valid_user) { build :user }
@@ -104,10 +121,19 @@ RSpec.describe "Api::V1::Products", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
+
+      role_owner.account_id = valid_account.id
+      role_owner.profile_id = profile_owner.id
+      role_owner.save!
+
+      valid_category.account_id = valid_account.id
+      valid_category.save!
+
       valid_product_two.account_id = valid_account.id
       valid_product_two.product_category_id = valid_category.id
       valid_product_two.save!
       valid_user.account_id = valid_account.id
+      valid_user.role_id = role_owner.id
       valid_user.save!
     end
 
@@ -115,10 +141,10 @@ RSpec.describe "Api::V1::Products", type: :request do
       headers = { "ACCEPT" => "application/json",
                   "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
       patch "/api/v1/products/#{valid_product_two.id}", :params => {
-                                 :product => {
-                                   :title => 'aleatory string',
-                                 },
-                               }, :headers => headers, as: :json
+                                                          :product => {
+                                                            :title => "aleatory string",
+                                                          },
+                                                        }, :headers => headers, as: :json
       expect(response).to have_http_status(:success)
     end
   end
