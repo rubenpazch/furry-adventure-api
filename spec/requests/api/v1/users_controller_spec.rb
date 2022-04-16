@@ -239,10 +239,10 @@ RSpec.describe "Api::V1::Users", type: :request do
       json_response = JSON.parse(response.body)
       expect(json_response["data"][0]["attributes"]["email"]).to eq(user_owner.email)
       expect(json_response["data"].length).to eq(2)
-      expect(json_response.dig("links", "first")).not_to be_nil
-      expect(json_response.dig("links", "last")).not_to be_nil
-      expect(json_response.dig("links", "prev")).not_to be_nil
-      expect(json_response.dig("links", "next")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "first_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "next_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "prev_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "links")).not_to be_nil
     end
   end
 end
