@@ -1,8 +1,19 @@
 class UserSerializer
   include JSONAPI::Serializer
   set_type :user
-  attributes :email, :first_name, :last_name, :name, :avatar, :last_login
+  attributes :id,
+             :name,
+             :first_name,
+             :last_name,
+             :avatar,
+             :email,
+             :role,
+             :role_id,
+             :last_login, 
+             :created_at,
+             :isSuperAdmin
+             :account_id
   #belongs_to :account
   #has_one :profile
-  #belongs_to :role, class_name: "Profiles::Role", foreign_key: "role_id"
+  belongs_to :role, class_name: "Role", foreign_key: "role_id", serializer: RoleSerializer
 end

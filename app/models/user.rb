@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   belongs_to :account
   has_one :profile
-  belongs_to :role, class_name: "Profiles::Role", foreign_key: "role_id"
+  belongs_to :role, class_name: "Role", foreign_key: "role_id"
   #belongs_to :person, class_name: "person", foreign_key: "person_id"
   validates :email, uniqueness: true
   validates_format_of :email, with: /@/, :message => "has incorrect format"

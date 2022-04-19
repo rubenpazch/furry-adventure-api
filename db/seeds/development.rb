@@ -49,12 +49,12 @@ ModuleApp.create(name: "Restaurant", description: "Option to offer tours")
 ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 
 #CreateRoles
-@superAdmin = Profiles::Role.create!(name: "SuperAdministrator", profile_id: @super_admin_profile.id, is_root: true, parent_id: 0, account_id: @global_account.id)
-@admin = Profiles::Role.create!(name: "Admin", profile_id: @admin_profile.id, is_root: false, parent_id: @superAdmin.id, account_id: @global_account.id)
-@owner = Profiles::Role.create!(name: "Owner Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
-@itsupport = Profiles::Role.create!(name: "IT support Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @owner.id, account_id: @daniel_account.id)
-@salesmanager = Profiles::Role.create!(name: "Sales Manager Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @owner.id, account_id: @daniel_account.id)
-@client = Profiles::Role.create!(name: "Client Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @salesmanager.id, account_id: @daniel_account.id)
+@superAdmin = Role.create!(name: "SuperAdministrator", profile_id: @super_admin_profile.id, is_root: true, parent_id: 0, account_id: @global_account.id)
+@admin = Role.create!(name: "Admin", profile_id: @admin_profile.id, is_root: false, parent_id: @superAdmin.id, account_id: @global_account.id)
+@owner = Role.create!(name: "Owner Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @admin.id, account_id: @daniel_account.id)
+@itsupport = Role.create!(name: "IT support Optica", profile_id: @manager_profile.id, is_root: false, parent_id: @owner.id, account_id: @daniel_account.id)
+@salesmanager = Role.create!(name: "Sales Manager Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @owner.id, account_id: @daniel_account.id)
+@client = Role.create!(name: "Client Optica", profile_id: @sales_profile.id, is_root: false, parent_id: @salesmanager.id, account_id: @daniel_account.id)
 
 #super admin user
 @user_admin = User.create(email: "admin@testing.com", password: "CuscoPeru123.", first_name: "admin", last_name: "user", account_id: @global_account.id, isSuperAdmin: true, role_id: @superAdmin.id)

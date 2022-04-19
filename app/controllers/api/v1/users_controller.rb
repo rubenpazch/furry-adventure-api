@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  include Paginable
   before_action :set_user, only: [:show, :update, :destroy]
   before_action :check_login
   before_action :check_owner, only: %i[update destroy]
@@ -32,9 +33,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def index
-    binding.pry
-    @result = User.page(params[:page]).per(params[:per_page]).search(params)
-    json_string = UserSerializer.new(@result).serializable_hash.to_json
+    @result = User.page(params[:page]).per(params[:items_per_page])
+    options = get_links_serializer_options("api_v1_users_path",
+                                           @result,
+                                           params[:items_per_page])
+    json_string = UserSerializer.new(@result, options).serializable_hash.to_json
     render json: json_string
   end
 

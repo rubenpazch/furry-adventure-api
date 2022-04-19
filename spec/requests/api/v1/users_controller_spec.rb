@@ -176,6 +176,13 @@ RSpec.describe "Api::V1::Users", type: :request do
     let(:role_owner) { build(:role) }
     let(:role_sales) { build(:role) }
     let(:user_sales) { build(:user) }
+    let(:user_sales1) { build(:user) }
+    let(:user_sales2) { build(:user) }
+    let(:user_sales3) { build(:user) }
+    let(:user_sales4) { build(:user) }
+    let(:user_sales5) { build(:user) }
+    let(:user_sales6) { build(:user) }
+
     let(:user_owner) { build(:user) }
     let(:profile_owner) { create(:profile) }
     let(:profile_sales) { create(:profile) }
@@ -201,17 +208,41 @@ RSpec.describe "Api::V1::Users", type: :request do
       user_sales.account_id = account_owner.id
       user_sales.role_id = role_sales.id
       user_sales.save!
+
+      user_sales2.account_id = account_owner.id
+      user_sales2.role_id = role_sales.id
+      user_sales2.save!
+
+      user_sales3.account_id = account_owner.id
+      user_sales3.role_id = role_sales.id
+      user_sales3.save!
+
+      user_sales4.account_id = account_owner.id
+      user_sales4.role_id = role_sales.id
+      user_sales4.save!
+
+      user_sales5.account_id = account_owner.id
+      user_sales5.role_id = role_sales.id
+      user_sales5.save!
+
+      user_sales6.account_id = account_owner.id
+      user_sales6.role_id = role_sales.id
+      user_sales6.save!
     end
 
     it "should show user" do
       headers = { "ACCEPT" => "application/json",
                   "Authorization" => JsonWebToken.encode(user_id: user_owner.id) }
-      params = { :page => "1", :per_page => "1", format: :json }
+      params = { :page => "1", :items_per_page => "2", format: :json }
       get "/api/v1/users", :params => params, :headers => headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response["data"][0]["attributes"]["email"]).to eq(user_owner.email)
       expect(json_response["data"].length).to eq(2)
+      expect(json_response.dig("links", "pagination", "first_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "next_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "prev_page_url")).not_to be_nil
+      expect(json_response.dig("links", "pagination", "links")).not_to be_nil
     end
   end
 end
