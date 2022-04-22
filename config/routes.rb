@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :create, :update, :destroy, :index]
       resources :login, only: [:create]
       get "tokens", to: "tokens#verify"
-      post "menu", to: "menu#menusubmenu"
+      post "menu", to: "menu#menu_submenu"
       namespace :products do
         resources :categories, only: [:index]
       end

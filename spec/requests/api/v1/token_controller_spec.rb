@@ -33,6 +33,9 @@ RSpec.describe "should get JWT token", type: :request do
       json_response = JSON.parse(response.body)
       expect(json_response["username"]).not_to be_nil
       expect(json_response["token"]).not_to be_nil
+      expect(json_response["menu"]).not_to be_nil
+      expect(json_response["account"]).not_to be_nil
+      expect(json_response["roles"]).not_to be_nil
       expect(json_response["username"]).to eq(existing_user_valid.email)
     end
   end
