@@ -26,3 +26,5 @@ production:
   <<: *default
   #database: db/production.sqlite3
   database: furry_adventure_production
+  #username: myapp
+  #password: <%= ENV["MYAPP_DATABASE_PASSWORD"] %>
