@@ -83,5 +83,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  config.allowed_cors_origins = ["https://web-react-sulca.herokuapp.com/", "https://demo1.trabajoscusco.com/", "https://admin-site-cusco.herokuapp.com/"]
+  config.allowed_cors_origins = ["web-react-sulca.herokuapp.com", "demo1.trabajoscusco.com", "admin-site-cusco.herokuapp.com"]
 end
