@@ -2,6 +2,8 @@ class Api::V1::PeopleController < ApplicationController
   before_action :set_person, only: [:show]
   before_action :check_login
   before_action :check_account, only: [:show]
+  include ErrorResponseActions
+  rescue_from ActiveRecord::RecordNotFound, :with => :resource_not_found
 
   def index
   end
@@ -11,7 +13,7 @@ class Api::V1::PeopleController < ApplicationController
     render json: json_string, status: :ok
   end
 
-  def created
+  def create
   end
 
   private

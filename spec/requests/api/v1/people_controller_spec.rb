@@ -55,6 +55,26 @@ RSpec.describe "Api::V1::People", type: :request do
                   "Authorization" => JsonWebToken.encode(user_id: user_nike.id) }
       get "/api/v1/people/#{person_one_bata.id}", :headers => headers
       expect(response.status).to eql(403)
-     end
+    end
+
+    it "should show forbidden when not token" do
+      headers = { "ACCEPT" => "application/json" }
+      get "/api/v1/people/#{person_one_bata.id}", :headers => headers
+      expect(response.status).to eql(403)
+    end
+
+    it "should show not found when not account user given" do
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: nil) }
+      get "/api/v1/people/#{person_one_bata.id}", :headers => headers
+      expect(response.status).to eql(404)
+    end
+
+    it "should show not found when not person given" do
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_nike.id) }
+      get "/api/v1/people/999", :headers => headers
+      expect(response.status).to eql(404)
+    end
   end
 end

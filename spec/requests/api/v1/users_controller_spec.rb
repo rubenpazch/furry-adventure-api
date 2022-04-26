@@ -69,8 +69,8 @@ RSpec.describe "Api::V1::Users", type: :request do
 
     it "should show not found when not user given" do
       headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: nil) }
-      get "/api/v1/users/#{nil}", :headers => headers
+                  "Authorization" => JsonWebToken.encode(user_id: user_nike.id) }
+      get "/api/v1/users/999", :headers => headers
       expect(response.status).to eql(404)
     end
   end

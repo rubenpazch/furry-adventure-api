@@ -5,7 +5,6 @@ class Api::V1::UsersController < ApplicationController
   before_action :check_login
   before_action :check_owner, only: %i[update destroy show]
   before_action :check_current_user, only: %i[index]
-  rescue_from ActiveRecord::UnknownAttributeError, :with => :not_implmented
   rescue_from ActiveRecord::RecordNotFound, :with => :resource_not_found
 
   def show
