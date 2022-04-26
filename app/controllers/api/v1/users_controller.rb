@@ -1,9 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   include Paginable
-  before_action :set_user, only: [:show, :update, :destroy]
+  include ErrorResponseActions
+  before_action :set_user, only: %i[show update destroy]
   before_action :check_login
-  before_action :check_owner, only: %i[update destroy]
-  before_action :check_current_user, only: [:index]
+  before_action :check_owner, only: %i[update destroy show]
+  before_action :check_current_user, only: %i[index]
+  rescue_from ActiveRecord::UnknownAttributeError, :with => :not_implmented
+  rescue_from ActiveRecord::RecordNotFound, :with => :resource_not_found
 
   def show
     json_string = UserSerializer.new(@user).serializable_hash.to_json
@@ -56,6 +59,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def check_owner
+    head :resource_not_found unless current_user
     head :forbidden unless @user.id == current_user&.id
   end
 

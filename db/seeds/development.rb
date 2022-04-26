@@ -64,7 +64,7 @@ ModuleApp.create(name: "Cloths", description: "Option to offer tours")
 @sulca_admin = User.create(email: "artexaperu@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "sulca", last_name: "textiles", account_id: @account_sulca.id, isSuperAdmin: false, role_id: @owner.id)
 #daniel user
 @daniel_admin = User.create(email: "daniel@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: "daniel", last_name: "lentes", account_id: @daniel_account.id, isSuperAdmin: false, role_id: @owner.id)
-@daniel_sales_user1 = User.create(email: "daniel_sales@gmail.com", password:  "^C#XeZxm-V6ptE?", first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, account_id: @daniel_account.id, isSuperAdmin: false, role_id: @salesmanager.id)
+@daniel_sales_user1 = User.create(email: "daniel_sales@gmail.com", password: "^C#XeZxm-V6ptE?", first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, account_id: @daniel_account.id, isSuperAdmin: false, role_id: @salesmanager.id)
 @daniel_sales_user2 = User.create(email: Faker::Internet.email, password: BCrypt::Password.create("secret"), first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, account_id: @daniel_account.id, isSuperAdmin: false, role_id: @salesmanager.id)
 @daniel_sales_user3 = User.create(email: Faker::Internet.email, password: BCrypt::Password.create("secret"), first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, account_id: @daniel_account.id, isSuperAdmin: false, role_id: @salesmanager.id)
 @daniel_sales_user4 = User.create(email: Faker::Internet.email, password: BCrypt::Password.create("secret"), first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, account_id: @daniel_account.id, isSuperAdmin: false, role_id: @salesmanager.id)
@@ -344,6 +344,41 @@ Job.create(
   nationality: Faker::Nation.nationality,
   age: Faker::Number.between(from: 1, to: 120),
   ocupation: Faker::Job.title,
+  account_id: @daniel_account.id,
+)
+
+@person2 = Person.create(
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  doc_id: Faker::IDNumber.brazilian_id,
+  address: Faker::Address.full_address,
+  cell_phone: Faker::PhoneNumber.cell_phone_in_e164,
+  contact_phone: Faker::PhoneNumber.cell_phone_in_e164,
+  district: 1,
+  province: 1,
+  deparment: 1,
+  country: 1,
+  nationality: Faker::Nation.nationality,
+  age: Faker::Number.between(from: 1, to: 120),
+  ocupation: Faker::Job.title,
+  account_id: @daniel_account.id,
+)
+
+@person3 = Person.create(
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  doc_id: Faker::IDNumber.brazilian_id,
+  address: Faker::Address.full_address,
+  cell_phone: Faker::PhoneNumber.cell_phone_in_e164,
+  contact_phone: Faker::PhoneNumber.cell_phone_in_e164,
+  district: 1,
+  province: 1,
+  deparment: 1,
+  country: 1,
+  nationality: Faker::Nation.nationality,
+  age: Faker::Number.between(from: 1, to: 120),
+  ocupation: Faker::Job.title,
+  account_id: @daniel_account.id,
 )
 
 OptometricHistory.create(

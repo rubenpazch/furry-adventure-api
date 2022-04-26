@@ -10,7 +10,7 @@ RSpec.describe Profiles::SubMenu, type: :model do
       valid_menu_admin.save!
     end
 
-    it "valid sub-menu" do
+    skip "valid sub-menu" do
     end
   end
 end
