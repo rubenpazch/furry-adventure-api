@@ -14,6 +14,12 @@ class Api::V1::PeopleController < ApplicationController
   end
 
   def create
+    @person = Person.new(person_params)
+    if @person.save
+      render json: @person, status: :created
+    else
+      render json: @person.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -35,5 +41,22 @@ class Api::V1::PeopleController < ApplicationController
 
   def get_token(str)
     str.split(" ").last
+  end
+
+  def person_params
+    params.require(:person).permit(:first_name,
+                                   :last_name,
+                                   :doc_id,
+                                   :address,
+                                   :cell_phone,
+                                   :contact_phone,
+                                   :district,
+                                   :province,
+                                   :deparment,
+                                   :country,
+                                   :nationality,
+                                   :age,
+                                   :ocupation,
+                                   :account_id)
   end
 end

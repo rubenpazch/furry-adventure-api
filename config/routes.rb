@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         resources :categories, only: [:index]
       end
       resources :products, only: [:index, :show, :create, :update]
-      resources :people, only: [:show]
+      resources :people, only: [:show, :create]
       #get "users", to: "users#admins"
       #resources :menu, only: [:index]
     end

@@ -127,6 +127,20 @@ RSpec.describe "Api::V1::Users", type: :request do
                             }, :headers => headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
     end
+
+    it "should not create user account is not given" do
+      headers = { "ACCEPT" => "application/json",
+                  "Authorization" => JsonWebToken.encode(user_id: user_adidas.id) }
+      post "/api/v1/users", :params => {
+                              :user => {
+                                :email => user_adidas.email,
+                                :password => user_adidas.password_digest,
+                                :first_name => user_adidas.first_name,
+                                :last_name => user_adidas.last_name,
+                              },
+                            }, :headers => headers, as: :json
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 
   context "UPDATE /updated" do
