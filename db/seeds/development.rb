@@ -25,7 +25,10 @@
 @sub_menu22 = Profiles::SubMenu.create!(title: "MENU.CLIENT.BUSCAR", link_to: "/clients/find", hasSubMenu: false, menus_id: @menu2.id)
 
 @menu3 = Profiles::Menu.create!(title: "MENU.USER.MANAGEMENT", link_to: "/apps/user-management/users", hasSubMenu: false, isRoot: false, account_id: @daniel_account.id)
-#@menu4 = Profiles::Menu.create!(title: "MENU.USER.MANAGEMENT", link_to: "/apps/user-management/users", hasSubMenu: false, isRoot: false, account_id: @daniel_account.id)
+
+@menu4 = Profiles::Menu.create!(title: "MENU.PEOPLE.MANAGEMENT", link_to: "/apps/people-management/people", hasSubMenu: true, isRoot: false, account_id: @daniel_account.id)
+@sub_menu41 = Profiles::SubMenu.create!(title: "MENU.PEOPLE.MANAGEMENT.NEW", link_to: "/apps/people-management/new", hasSubMenu: false, menus_id: @menu4.id)
+@sub_menu42 = Profiles::SubMenu.create!(title: "MENU.PEOPLE.MANAGEMENT.SEARCH", link_to: "/apps/people-management/search", hasSubMenu: false, menus_id: @menu4.id)
 
 #profiles
 @super_admin_profile = Profile.create!(name: "super administrator")
@@ -41,6 +44,7 @@ Profiles::MenuAccess.create!(profile_id: @admin_profile.id, menus_id: @menu2.id)
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu1.id)
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu2.id)
 Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu3.id)
+Profiles::MenuAccess.create!(profile_id: @manager_profile.id, menus_id: @menu4.id)
 Profiles::MenuAccess.create!(profile_id: @sales_profile.id, menus_id: @menu2.id)
 
 #Modules
