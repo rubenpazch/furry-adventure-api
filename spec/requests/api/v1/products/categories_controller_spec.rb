@@ -57,7 +57,7 @@ RSpec.describe "Api::V1::Products::Categories", type: :request do
       valid_category_image_two.save!
     end
 
-    it "should return a list of categories" do
+    skip "should return a list of categories" do
       headers = { "ACCEPT" => "application/json",
                   "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
       get "/api/v1/products/categories", headers: headers

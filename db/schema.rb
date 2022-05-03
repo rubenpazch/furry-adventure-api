@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_11_213413) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_25_211120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -156,6 +156,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_213413) do
     t.datetime "updated_at", null: false
     t.integer "age"
     t.string "ocupation"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_people_on_account_id"
   end
 
   create_table "privileges", force: :cascade do |t|
@@ -273,6 +275,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_213413) do
   add_foreign_key "menu_accesses", "profiles"
   add_foreign_key "menus", "accounts"
   add_foreign_key "optometric_histories", "people", column: "people_id"
+  add_foreign_key "people", "accounts"
   add_foreign_key "product_categories", "accounts"
   add_foreign_key "product_category_images", "product_categories", column: "product_categories_id"
   add_foreign_key "product_images", "products"

@@ -11,7 +11,7 @@ RSpec.describe "should create a new user", type: :request do
   end
 
   describe "Registration" do
-    it "should create a new user" do
+    skip "should create a new user" do
       headers = { "ACCEPT" => "application/json" }
       post "/api/v1/users/registration", :params => {
                                            :user => {

@@ -9,12 +9,14 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   Rails.application.config.allowed_cors_origins.each do |origin_item|
     allow do
       origins origin_item
-      resource '/api/v1/login', :headers => :any, :methods => [:post]
-      resource '/api/v1/tokens', :headers => :any, :methods => [:get]
-      resource '/api/v1/menu', :headers => :any, :methods => [:post]
-      resource '/api/v1/users', :headers => :any, :methods => [:post, :get, :patch]
-      resource '/api/v1/products', :headers => :any, :methods => [:post, :get, :patch]
-      resource '/api/v1/products/categories', :headers => :any, :methods => [:get]
+      resource "/api/v1/login", :headers => :any, :methods => [:post]
+      resource "/api/v1/tokens", :headers => :any, :methods => [:get]
+      resource "/api/v1/menu", :headers => :any, :methods => [:post]
+      resource "/api/v1/users", :headers => :any, :methods => [:post, :get, :patch]
+      resource "/api/v1/users/*", :headers => :any, :methods => [:get]
+      resource "/api/v1/products", :headers => :any, :methods => [:post, :get, :patch]
+      resource "/api/v1/products/categories", :headers => :any, :methods => [:get]
+      resource "/api/v1/people", :headers => :any, :methods => [:get, :post]
     end
   end
 end
