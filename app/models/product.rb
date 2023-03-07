@@ -3,7 +3,6 @@ class Product < ApplicationRecord
   validates :slug, presence: true
   validates :title, presence: true
   belongs_to :account
-  belongs_to :category, class_name: "Products::Category", foreign_key: 'product_category_id'
-  has_many :product_images, class_name: "Products::Image", foreign_key: 'product_id'
-
+  belongs_to :category, class_name: 'Products::Category', foreign_key: 'product_category_id'
+  has_many :product_images, class_name: 'Products::Image', foreign_key: 'product_id'
 end

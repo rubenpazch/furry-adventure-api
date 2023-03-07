@@ -6,16 +6,16 @@ class Api::V1::Users::RegistrationController < ApplicationController
 
       render json: {
         errors: @user.errors,
-        username: @user.email,
+        username: @user.email
       }, status: :created
     else
       render json: {
-        errors: @user.errors,
+        errors: @user.errors
       }, status: :unprocessable_entity
     end
   end
 
-  private #
+  private
 
   def user_params
     params.require(:user).permit(:email, :password, :first_name, :last_name, :account_id)

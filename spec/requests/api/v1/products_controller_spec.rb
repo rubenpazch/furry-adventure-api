@@ -1,7 +1,7 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Api::V1::Products", type: :request do
-  context "GET /index" do
+RSpec.describe 'Api::V1::Products', type: :request do
+  context 'GET /index' do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
     let(:valid_category) { build :products_category }
@@ -24,24 +24,24 @@ RSpec.describe "Api::V1::Products", type: :request do
       valid_product_two.save!
     end
 
-    it "should show a product" do
-      headers = { "ACCEPT" => "application/json" }
+    it 'should show a product' do
+      headers = { 'ACCEPT' => 'application/json' }
       get "/api/v1/products/#{valid_product_two.id}", headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["id"]).to equal(valid_product_two.id)
+      expect(json_response['id']).to equal(valid_product_two.id)
     end
 
-    it "should return a list of products" do
-      headers = { "ACCEPT" => "application/json" }
-      get "/api/v1/products", headers: headers
+    it 'should return a list of products' do
+      headers = { 'ACCEPT' => 'application/json' }
+      get '/api/v1/products', headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
       expect(json_response.length.to_i).to equal(2)
     end
   end
 
-  context "POST /create" do
+  context 'POST /create' do
     let(:profile_owner) { create(:profile) }
     let(:role_owner) { build(:role) }
     let(:valid_organization) { create :organization }
@@ -70,45 +70,45 @@ RSpec.describe "Api::V1::Products", type: :request do
       valid_user.save!
     end
 
-    it "should create a product" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
-      post "/api/v1/products", :params => {
-                                 :product => {
-                                   :title => valid_product.title,
-                                   :price => valid_product.price,
-                                   :published => valid_product.published,
-                                   :description => valid_product.description,
-                                   :slug => valid_product.slug,
-                                   :sale_price => valid_product.sale_price,
-                                   :product_category_id => valid_category.id,
-                                   :account_id => valid_account.id,
-                                   :slug_collection => valid_category.slug,
-                                 },
-                               }, :headers => headers, as: :json
+    it 'should create a product' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: valid_user.id) }
+      post '/api/v1/products', params: {
+        product: {
+          title: valid_product.title,
+          price: valid_product.price,
+          published: valid_product.published,
+          description: valid_product.description,
+          slug: valid_product.slug,
+          sale_price: valid_product.sale_price,
+          product_category_id: valid_category.id,
+          account_id: valid_account.id,
+          slug_collection: valid_category.slug
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:created)
     end
 
-    it "should forbid create product" do
-      headers = { "ACCEPT" => "application/json" }
-      post "/api/v1/products", :params => {
-                                 :product => {
-                                   :title => valid_product.title,
-                                   :price => valid_product.price,
-                                   :published => valid_product.published,
-                                   :description => valid_product.description,
-                                   :slug => valid_product.slug,
-                                   :sale_price => valid_product.sale_price,
-                                   :product_category_id => valid_category.id,
-                                   :account_id => valid_account.id,
-                                   :slug_collection => valid_category.slug,
-                                 },
-                               }, :headers => headers, as: :json
+    it 'should forbid create product' do
+      headers = { 'ACCEPT' => 'application/json' }
+      post '/api/v1/products', params: {
+        product: {
+          title: valid_product.title,
+          price: valid_product.price,
+          published: valid_product.published,
+          description: valid_product.description,
+          slug: valid_product.slug,
+          sale_price: valid_product.sale_price,
+          product_category_id: valid_category.id,
+          account_id: valid_account.id,
+          slug_collection: valid_category.slug
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:forbidden)
     end
   end
 
-  context "PATCH /update" do
+  context 'PATCH /update' do
     let(:profile_owner) { create(:profile) }
     let(:role_owner) { build(:role) }
     let(:valid_organization) { create :organization }
@@ -137,14 +137,14 @@ RSpec.describe "Api::V1::Products", type: :request do
       valid_user.save!
     end
 
-    it "should update a product" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
-      patch "/api/v1/products/#{valid_product_two.id}", :params => {
-                                                          :product => {
-                                                            :title => "aleatory string",
-                                                          },
-                                                        }, :headers => headers, as: :json
+    it 'should update a product' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: valid_user.id) }
+      patch "/api/v1/products/#{valid_product_two.id}", params: {
+        product: {
+          title: 'aleatory string'
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:success)
     end
   end

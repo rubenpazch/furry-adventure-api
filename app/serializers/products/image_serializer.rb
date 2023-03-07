@@ -2,5 +2,5 @@ class Products::ImageSerializer
   include JSONAPI::Serializer
   set_type :product_images
   attributes :thumbnail, :original
-  belongs_to :product, class_name: "Product", foreign_key: "product_id"
+  belongs_to :product, class_name: 'Product', foreign_key: 'product_id'
 end

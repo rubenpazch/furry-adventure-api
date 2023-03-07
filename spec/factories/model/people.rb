@@ -11,7 +11,7 @@ FactoryBot.define do
     deparment { 1 }
     country { 1 }
     nationality { Faker::Nation.nationality }
-    age { Faker::Number.between(from: 1, to: 120)}
+    age { Faker::Number.between(from: 1, to: 120) }
     ocupation { Faker::Job.title }
   end
 end

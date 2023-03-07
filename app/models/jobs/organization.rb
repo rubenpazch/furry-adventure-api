@@ -1,5 +1,5 @@
-module Jobs 
+module Jobs
   class Organization < ActiveRecord::Base
-     self.table_name = "job_organizations"
+    self.table_name = 'job_organizations'
   end
 end

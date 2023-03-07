@@ -4,12 +4,12 @@ class Api::V1::LoginController < ApplicationController
     if @user&.authenticate(user_params[:password])
       @user.update_attribute(:last_login, Time.now)
       render json: {
-        token: JsonWebToken.encode({user_id: @user.id}),
+        token: JsonWebToken.encode({ user_id: @user.id }),
         username: @user.email,
         email: @user.email,
         first_name: @user.first_name,
         last_name: @user.last_name,
-        id: @user.id,
+        id: @user.id
       }
     else
       head :unauthorized

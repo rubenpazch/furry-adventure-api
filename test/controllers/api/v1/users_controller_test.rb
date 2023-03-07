@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -6,92 +6,92 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     @userTwo = users(:two)
   end
 
-  test "should show user" do
+  test 'should show user' do
     get api_v1_user_url(@user), as: :json
     assert_response :success
-    json_response = JSON.parse(self.response.body)
-    assert_equal @user.email, json_response["email"]
+    json_response = JSON.parse(response.body)
+    assert_equal @user.email, json_response['email']
   end
 
-  test "should create a user" do
-    assert_difference("User.count") do
+  test 'should create a user' do
+    assert_difference('User.count') do
       post api_v1_users_url, params: {
-                               user: {
-                                 email: "testingNew@gmail.com",
-                                 password: "123456",
-                                 first_name: "aleatory firstname",
-                                 last_name: "aleatoryy lastname",
-                               },
-                             }, as: :json
+        user: {
+          email: 'testingNew@gmail.com',
+          password: '123456',
+          first_name: 'aleatory firstname',
+          last_name: 'aleatoryy lastname'
+        }
+      }, as: :json
     end
     assert_response :created
   end
 
-  test "should not create user with taken email" do
-    assert_no_difference("User.count") do
-      post api_v1_users_url, params: { user: { email: @user.email, password: "123456" } }, as: :json
+  test 'should not create user with taken email' do
+    assert_no_difference('User.count') do
+      post api_v1_users_url, params: { user: { email: @user.email, password: '123456' } }, as: :json
     end
     assert_response :unprocessable_entity
   end
 
-  #test "should update user" do
+  # test "should update user" do
   #  patch api_v1_user_url(@user), params: { user: { email: @user.email, password: '123456'}}, as: :json
   #  assert_response :success
-  #end
+  # end
 
-  #test "should not update when invalid params are sent" do
+  # test "should not update when invalid params are sent" do
   #  patch api_v1_user_url(@user), params: { user: { email: 'bad_email', password: '123456'}}, as: :json
   #  assert_response :unprocessable_entity
-  #end
+  # end
 
-  #test "should destroy user" do
+  # test "should destroy user" do
   #  assert_difference("User.count", -1) do
   #    delete api_v1_user_url(@user), as: :json
   #  end
   #  assert_response :no_content
-  #end
+  # end
 
-  test "should update user with valid token" do
+  test 'should update user with valid token' do
     patch api_v1_user_url(@user), params: {
                                     user: {
-                                      email: @user.email,
-                                    },
+                                      email: @user.email
+                                    }
                                   },
                                   headers: {
-                                    Authorization: JsonWebToken.encode(user_id: @user.id),
+                                    Authorization: JsonWebToken.encode(user_id: @user.id)
                                   }, as: :json
     assert_response :success
   end
 
-  test "should forbid update user" do
+  test 'should forbid update user' do
     patch api_v1_user_url(@user), params: {
-                                    user: {
-                                      email: @user.email,
-                                    },
-                                  }, as: :json
+      user: {
+        email: @user.email
+      }
+    }, as: :json
     assert_response :forbidden
   end
 
-  test "should destroy user with valid token" do
-    assert_difference("User.count", -1) do
+  test 'should destroy user with valid token' do
+    assert_difference('User.count', -1) do
       delete api_v1_user_url(@user), headers: {
-                                       Authorization: JsonWebToken.encode(user_id: @user.id),
-                                     }, as: :json
+        Authorization: JsonWebToken.encode(user_id: @user.id)
+      }, as: :json
     end
     assert_response :no_content
   end
 
-  test "should forbid destroy user" do
-    assert_no_difference("User.count") do
+  test 'should forbid destroy user' do
+    assert_no_difference('User.count') do
       delete api_v1_user_url(@user), as: :json
     end
     assert_response :forbidden
   end
 
-  test "should return a list of users" do
+  test 'should return a list of users' do
     get api_v1_users_url, as: :json
     assert_response :success
-    json_response = JSON.parse(self.response.body)
-    assert_equal json_response.first["id"], @userTwo.id
+    json_response = JSON.parse(response.body)
+    assert_equal json_response.first['id'], @userTwo.id
   end
 end

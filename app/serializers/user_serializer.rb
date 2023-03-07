@@ -9,11 +9,11 @@ class UserSerializer
              :email,
              :role,
              :role_id,
-             :last_login, 
+             :last_login,
              :created_at,
              :isSuperAdmin
-             :account_id
-  #belongs_to :account
-  #has_one :profile
-  belongs_to :role, class_name: "Role", foreign_key: "role_id", serializer: RoleSerializer
+  :account_id
+  # belongs_to :account
+  # has_one :profile
+  belongs_to :role, class_name: 'Role', foreign_key: 'role_id', serializer: RoleSerializer
 end

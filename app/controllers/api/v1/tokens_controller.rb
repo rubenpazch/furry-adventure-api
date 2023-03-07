@@ -1,8 +1,8 @@
 class Api::V1::TokensController < ApplicationController
   def verify
-    @authorization = get_token(request.headers["Authorization"])
+    @authorization = get_token(request.headers['Authorization'])
     @decodedToken = JsonWebToken.decode(@authorization)
-    @user_id = @decodedToken["user_id"] if @decodedToken
+    @user_id = @decodedToken['user_id'] if @decodedToken
     @user = User.find(@user_id)
     @menu = @user.role.profile.menus
     @account = @user.account
@@ -18,7 +18,7 @@ class Api::V1::TokensController < ApplicationController
         id: @user.id,
         menu: @menu,
         account: @account,
-        roles: @roles,
+        roles: @roles
       }
     else
       head :unauthorized
@@ -30,6 +30,6 @@ class Api::V1::TokensController < ApplicationController
   private
 
   def get_token(str)
-    str.split(" ").last
+    str.split(' ').last
   end
 end

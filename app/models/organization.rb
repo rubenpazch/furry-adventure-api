@@ -1,3 +1,2 @@
 class Organization < ApplicationRecord
-  
 end

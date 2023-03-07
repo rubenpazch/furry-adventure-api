@@ -1,7 +1,7 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Api::V1::Menu", type: :request do
-  context "GET /index" do
+RSpec.describe 'Api::V1::Menu', type: :request do
+  context 'GET /index' do
     let(:valid_role) { build(:role) }
     let(:valid_profile) { create(:profile) }
     let(:valid_account) { build :account }
@@ -19,7 +19,7 @@ RSpec.describe "Api::V1::Menu", type: :request do
     before(:each) do
       valid_account.organizations_id = valid_organization.id
       valid_account.save!
-      
+
       valid_role.account_id = valid_account.id
       valid_role.profile_id = valid_profile.id
       valid_role.save!
@@ -50,15 +50,15 @@ RSpec.describe "Api::V1::Menu", type: :request do
       menu_access_valid_user2.save!
     end
 
-    it "should return list of menus" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: valid_user.id) }
-      post "/api/v1/menu", headers: headers
+    it 'should return list of menus' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: valid_user.id) }
+      post '/api/v1/menu', headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response.dig("data").length).to eq(2)
-      expect(json_response.dig("data")[0].dig("attributes", "title")).not_to be_nil
-      expect(json_response.dig("data")[0].dig("attributes", "sub_menus").length).to eq(2)
+      expect(json_response.dig('data').length).to eq(2)
+      expect(json_response.dig('data')[0].dig('attributes', 'title')).not_to be_nil
+      expect(json_response.dig('data')[0].dig('attributes', 'sub_menus').length).to eq(2)
     end
   end
 end

@@ -35,7 +35,7 @@ class CreateOptometricHistories < ActiveRecord::Migration[7.0]
       t.string :a_v_ao_oi
       t.string :cerca_add_od
       t.string :cerca_add_oi
-      
+
       t.timestamps
     end
   end

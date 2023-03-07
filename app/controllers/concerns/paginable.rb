@@ -33,37 +33,37 @@ module Paginable
           links: [
             {
               active: prev_page == current_page,
-              label: "&laquo; Previous",
+              label: '&laquo; Previous',
               page: prev_page,
-              url: prev_page_url,
+              url: prev_page_url
             },
             {
               active: current_page == current_page,
               label: "#{current_page}",
               page: current_page,
-              url: send(links_paths, page: current_page),
+              url: send(links_paths, page: current_page)
             },
             {
               active: current_page + 1 == current_page,
               label: "#{current_page + 1}",
               page: current_page + 1,
-              url: send(links_paths, page: current_page + 1),
+              url: send(links_paths, page: current_page + 1)
             },
             {
               active: current_page + 2 == current_page,
               label: "#{current_page + 2}",
               page: current_page + 2,
-              url: send(links_paths, page: current_page + 2),
+              url: send(links_paths, page: current_page + 2)
             },
             {
               active: next_page == current_page,
-              label: "Next &raquo;",
+              label: 'Next &raquo;',
               page: next_page,
-              url: send(links_paths, page: next_page),
-            },
-          ],
-        },
-      },
+              url: send(links_paths, page: next_page)
+            }
+          ]
+        }
+      }
     }
   end
 end

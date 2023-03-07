@@ -8,7 +8,7 @@ gem 'rails', '~> 7.0.2', '>= 7.0.2.2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
-gem "puma", "~> 5.0"
+gem 'puma', '~> 5.0'
 
 gem 'pg'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -29,11 +29,12 @@ gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails'
-  gem 'faker'
-  gem 'factory_bot_rails'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+  gem 'rubocop'
 end
 
 group :development do
@@ -43,18 +44,18 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "bcrypt", "~> 3.1.7"
+gem 'bcrypt', '~> 3.1.7'
 
-gem "jwt", "~> 2.3"
+gem 'jwt', '~> 2.3'
 
-gem "pry", "~> 0.13.0"
+gem 'pry', '~> 0.13.0'
 
-gem "pry-byebug", "~> 3.9.0"
+gem 'pry-byebug', '~> 3.9.0'
 
 gem 'net-smtp', require: false
 
-gem "jsonapi-serializer", "~> 2.2"
+gem 'jsonapi-serializer', '~> 2.2'
 
-gem "kaminari", "~> 1.2"
+gem 'kaminari', '~> 1.2'
