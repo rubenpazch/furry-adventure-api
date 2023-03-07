@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddColumnToRole < ActiveRecord::Migration[6.1]
   def change
     add_column :roles, :is_root, :boolean

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
-  factory :organization, :class => Organization do
+  factory :organization, class: Organization do
     name { Faker::Company.name }
     description { Faker::Company.industry }
     organization_id { Faker::Company.polish_taxpayer_identification_number }

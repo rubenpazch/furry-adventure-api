@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class MockController
   include Authenticable
   attr_accessor :request
-  
+
   def initialize
     mock_request = Struct.new(:headers)
     self.request = mock_request.new({})
@@ -13,7 +15,7 @@ class AuthenticableTest < ActionDispatch::IntegrationTest
     @user = users(:one)
     @authentication = MockController.new
   end
-  
+
   test 'should get user from Authorization token' do
     @authentication.request.headers['Authorization'] = JsonWebToken.encode(user_id: @user.id)
     assert_not_nil @authentication.current_user

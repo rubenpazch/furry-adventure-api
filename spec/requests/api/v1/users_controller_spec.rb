@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe "Api::V1::Users", type: :request do
-  context "GET /show" do
+require 'rails_helper'
+
+RSpec.describe 'Api::V1::Users', type: :request do
+  context 'GET /show' do
     let(:role_owner_adidas) { build(:role) }
     let(:user_adidas) { build(:user) }
     let(:profile_adidas) { create(:profile) }
@@ -38,44 +40,44 @@ RSpec.describe "Api::V1::Users", type: :request do
       user_nike.save!
     end
 
-    it "should show user" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_adidas.id) }
-      get "/api/v1/users/#{user_adidas.id}", :headers => headers
+    it 'should show user' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_adidas.id) }
+      get "/api/v1/users/#{user_adidas.id}", headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["data"]["attributes"]["email"]).to eq(user_adidas.email)
+      expect(json_response['data']['attributes']['email']).to eq(user_adidas.email)
     end
 
-    it "should show forbidden when wrong owner" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_nike.id) }
-      get "/api/v1/users/#{user_adidas.id}", :headers => headers
+    it 'should show forbidden when wrong owner' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_nike.id) }
+      get "/api/v1/users/#{user_adidas.id}", headers: headers
       expect(response.status).to eql(403)
     end
 
-    it "should show forbidden when not token" do
-      headers = { "ACCEPT" => "application/json" }
-      get "/api/v1/users/#{user_adidas.id}", :headers => headers
+    it 'should show forbidden when not token' do
+      headers = { 'ACCEPT' => 'application/json' }
+      get "/api/v1/users/#{user_adidas.id}", headers: headers
       expect(response.status).to eql(403)
     end
 
-    it "should show not found when not owner given" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: nil) }
-      get "/api/v1/users/#{user_adidas.id}", :headers => headers
+    it 'should show not found when not owner given' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: nil) }
+      get "/api/v1/users/#{user_adidas.id}", headers: headers
       expect(response.status).to eql(404)
     end
 
-    it "should show not found when not user given" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_nike.id) }
-      get "/api/v1/users/999", :headers => headers
+    it 'should show not found when not user given' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_nike.id) }
+      get '/api/v1/users/999', headers: headers
       expect(response.status).to eql(404)
     end
   end
 
-  context "POST /created" do
+  context 'POST /created' do
     let(:role_owner_adidas) { build(:role) }
     let(:profile_adidas) { create(:profile) }
     let(:user_adidas) { build(:user) }
@@ -97,53 +99,53 @@ RSpec.describe "Api::V1::Users", type: :request do
       user_adidas.save!
     end
 
-    it "should create a user" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_adidas.id) }
-      post "/api/v1/users", :params => {
-                              :user => {
-                                :email => user_adidas_client.email,
-                                :password => user_adidas_client.password_digest,
-                                :first_name => user_adidas_client.first_name,
-                                :last_name => user_adidas_client.last_name,
-                                :account_id => account_adidas.id,
-                                :role_id => role_owner_adidas.id,
-                              },
-                            }, :headers => headers, as: :json
+    it 'should create a user' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_adidas.id) }
+      post '/api/v1/users', params: {
+        user: {
+          email: user_adidas_client.email,
+          password: user_adidas_client.password_digest,
+          first_name: user_adidas_client.first_name,
+          last_name: user_adidas_client.last_name,
+          account_id: account_adidas.id,
+          role_id: role_owner_adidas.id
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:created)
     end
 
-    it "should not create user with taken email" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_adidas.id) }
-      post "/api/v1/users", :params => {
-                              :user => {
-                                :email => existing_user_adidas.email,
-                                :password => user_adidas.password_digest,
-                                :first_name => user_adidas.first_name,
-                                :last_name => user_adidas.last_name,
-                                :account_id => account_adidas.id,
-                              },
-                            }, :headers => headers, as: :json
+    it 'should not create user with taken email' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_adidas.id) }
+      post '/api/v1/users', params: {
+        user: {
+          email: existing_user_adidas.email,
+          password: user_adidas.password_digest,
+          first_name: user_adidas.first_name,
+          last_name: user_adidas.last_name,
+          account_id: account_adidas.id
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it "should not create user account is not given" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_adidas.id) }
-      post "/api/v1/users", :params => {
-                              :user => {
-                                :email => user_adidas.email,
-                                :password => user_adidas.password_digest,
-                                :first_name => user_adidas.first_name,
-                                :last_name => user_adidas.last_name,
-                              },
-                            }, :headers => headers, as: :json
+    it 'should not create user account is not given' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_adidas.id) }
+      post '/api/v1/users', params: {
+        user: {
+          email: user_adidas.email,
+          password: user_adidas.password_digest,
+          first_name: user_adidas.first_name,
+          last_name: user_adidas.last_name
+        }
+      }, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
-  context "UPDATE /updated" do
+  context 'UPDATE /updated' do
     let(:role_owner_adidas) { build(:role) }
     let(:profile_adidas) { create(:profile) }
     let(:organization_adidas) { create(:organization) }
@@ -163,37 +165,37 @@ RSpec.describe "Api::V1::Users", type: :request do
       existing_user_adidas.save!
     end
 
-    it "should update user with valid token" do
-      updated_email = "testingemail@gmail.com"
+    it 'should update user with valid token' do
+      updated_email = 'testingemail@gmail.com'
       headers = {
-        "ACCEPT" => "application/json",
-        "Authorization" => JsonWebToken.encode(user_id: existing_user_adidas.id),
+        'ACCEPT' => 'application/json',
+        'Authorization' => JsonWebToken.encode(user_id: existing_user_adidas.id)
       }
-      patch "/api/v1/users/#{existing_user_adidas.id}", :params => {
-                                                          :user => {
-                                                            :email => updated_email,
-                                                          },
+      patch "/api/v1/users/#{existing_user_adidas.id}", params: {
+                                                          user: {
+                                                            email: updated_email
+                                                          }
                                                         },
-                                                        :headers => headers, as: :json
+                                                        headers: headers, as: :json
       expect(response).to have_http_status(:success)
     end
 
-    it "should forbid update user without token" do
-      updated_email = "testingemail@gmail.com"
+    it 'should forbid update user without token' do
+      updated_email = 'testingemail@gmail.com'
       headers = {
-        "ACCEPT" => "application/json",
+        'ACCEPT' => 'application/json'
       }
-      patch "/api/v1/users/#{existing_user_adidas.id}", :params => {
-                                                          :user => {
-                                                            :email => updated_email,
-                                                          },
+      patch "/api/v1/users/#{existing_user_adidas.id}", params: {
+                                                          user: {
+                                                            email: updated_email
+                                                          }
                                                         },
-                                                        :headers => headers, as: :json
+                                                        headers: headers, as: :json
       expect(response).to have_http_status(:forbidden)
     end
   end
 
-  context "DELETE /deleted" do
+  context 'DELETE /deleted' do
     let(:role_owner_adidas) { build(:role) }
     let(:profile_adidas) { create(:profile) }
     let(:organization_adidas) { create(:organization) }
@@ -213,25 +215,25 @@ RSpec.describe "Api::V1::Users", type: :request do
       existing_user_adidas.save!
     end
 
-    it "should destroy user with valid token" do
+    it 'should destroy user with valid token' do
       headers = {
-        "ACCEPT" => "application/json",
-        "Authorization" => JsonWebToken.encode(user_id: existing_user_adidas.id),
+        'ACCEPT' => 'application/json',
+        'Authorization' => JsonWebToken.encode(user_id: existing_user_adidas.id)
       }
-      delete "/api/v1/users/#{existing_user_adidas.id}", :headers => headers, as: :json
+      delete "/api/v1/users/#{existing_user_adidas.id}", headers: headers, as: :json
       expect(response).to have_http_status(:no_content)
     end
 
-    it "should destroy user with valid token" do
+    it 'should destroy user with valid token' do
       headers = {
-        "ACCEPT" => "application/json",
+        'ACCEPT' => 'application/json'
       }
-      delete "/api/v1/users/#{existing_user_adidas.id}", :headers => headers, as: :json
+      delete "/api/v1/users/#{existing_user_adidas.id}", headers: headers, as: :json
       expect(response).to have_http_status(:forbidden)
     end
   end
 
-  context "GET /index" do
+  context 'GET /index' do
     let(:role_owner_adidas) { build(:role) }
     let(:role_sales) { build(:role) }
     let(:user_sales) { build(:user) }
@@ -289,19 +291,19 @@ RSpec.describe "Api::V1::Users", type: :request do
       user_sales6.save!
     end
 
-    it "should show user" do
-      headers = { "ACCEPT" => "application/json",
-                  "Authorization" => JsonWebToken.encode(user_id: user_owner.id) }
-      params = { :page => "1", :items_per_page => "2", format: :json }
-      get "/api/v1/users", :params => params, :headers => headers
+    it 'should show user' do
+      headers = { 'ACCEPT' => 'application/json',
+                  'Authorization' => JsonWebToken.encode(user_id: user_owner.id) }
+      params = { page: '1', items_per_page: '2', format: :json }
+      get '/api/v1/users', params: params, headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["data"][0]["attributes"]["email"]).to eq(user_owner.email)
-      expect(json_response["data"].length).to eq(2)
-      expect(json_response.dig("links", "pagination", "first_page_url")).not_to be_nil
-      expect(json_response.dig("links", "pagination", "next_page_url")).not_to be_nil
-      expect(json_response.dig("links", "pagination", "prev_page_url")).not_to be_nil
-      expect(json_response.dig("links", "pagination", "links")).not_to be_nil
+      expect(json_response['data'][0]['attributes']['email']).to eq(user_owner.email)
+      expect(json_response['data'].length).to eq(2)
+      expect(json_response.dig('links', 'pagination', 'first_page_url')).not_to be_nil
+      expect(json_response.dig('links', 'pagination', 'next_page_url')).not_to be_nil
+      expect(json_response.dig('links', 'pagination', 'prev_page_url')).not_to be_nil
+      expect(json_response.dig('links', 'pagination', 'links')).not_to be_nil
     end
   end
 end

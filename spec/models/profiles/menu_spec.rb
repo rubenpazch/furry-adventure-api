@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Profiles::Menu, type: :model do
-  context "create admin menu" do
+  context 'create admin menu' do
     let(:org_super_admin) { create(:organization) }
     let(:org_owner) { create(:organization) }
 
@@ -40,7 +42,7 @@ RSpec.describe Profiles::Menu, type: :model do
       menu_super_admin.account_id = account_super_admin.id
       menu_super_admin.save!
 
-      #owner
+      # owner
       account_owner.organizations_id = org_owner.id
       account_owner.save!
 
@@ -57,7 +59,7 @@ RSpec.describe Profiles::Menu, type: :model do
       role_sales.account_id = account_owner.id
       role_sales.profile_id = profile_sales.id
       role_sales.save!
-      #menu access -super admin
+      # menu access -super admin
       menu_access_superadmin.menus_id = menu_super_admin.id
       menu_access_superadmin.profile_id = profile_super_admin.id
       menu_access_superadmin.save!
@@ -77,25 +79,25 @@ RSpec.describe Profiles::Menu, type: :model do
       menu_access_owner_sales.menus_id = menu_sales.id
       menu_access_owner_sales.profile_id = profile_owner.id
       menu_access_owner_sales.save!
-      #sales
+      # sales
       menu_access_sales.menus_id = menu_sales.id
       menu_access_sales.profile_id = profile_sales.id
       menu_access_sales.save!
     end
 
-    it "valid menu" do
+    it 'valid menu' do
       expect(menu_super_admin).to be_valid
     end
 
-    it "super admin menu" do
+    it 'super admin menu' do
       expect(role_super_admin.profile.menus.length).to match(3)
     end
 
-    it "super admin menu" do
+    it 'super admin menu' do
       expect(role_owner.profile.menus.length).to match(2)
     end
 
-    it "super admin menu" do
+    it 'super admin menu' do
       expect(role_sales.profile.menus.length).to match(1)
     end
   end

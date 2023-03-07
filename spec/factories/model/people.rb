@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :person do
     first_name { Faker::Name.first_name }
@@ -11,7 +13,7 @@ FactoryBot.define do
     deparment { 1 }
     country { 1 }
     nationality { Faker::Nation.nationality }
-    age { Faker::Number.between(from: 1, to: 120)}
+    age { Faker::Number.between(from: 1, to: 120) }
     ocupation { Faker::Job.title }
   end
 end

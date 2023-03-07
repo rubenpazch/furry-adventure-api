@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateModuleApps < ActiveRecord::Migration[6.1]
   def change
     create_table :module_apps do |t|

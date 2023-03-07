@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddReferenceToMenu < ActiveRecord::Migration[7.0]
   def change
     add_reference :menus, :account, foreign_key: true

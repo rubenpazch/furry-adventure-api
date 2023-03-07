@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  context "has valid product" do
+  context 'has valid product' do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
     let(:valid_category) { build :products_category }
@@ -19,12 +21,12 @@ RSpec.describe Product, type: :model do
       valid_product.save!
     end
 
-    it "with valid attributes" do
+    it 'with valid attributes' do
       expect(valid_product).to be_valid
     end
   end
 
-  context "has invalid product" do
+  context 'has invalid product' do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
     let(:valid_category) { build :products_category }
@@ -41,32 +43,32 @@ RSpec.describe Product, type: :model do
       invalid_product.product_category_id = valid_category.id
     end
 
-    it "with invalid title" do
+    it 'with invalid title' do
       invalid_product.title = nil
       expect(invalid_product).to be_invalid
     end
 
-    it "with empty title to be invalid" do
-      invalid_product.title = ""
+    it 'with empty title to be invalid' do
+      invalid_product.title = ''
       expect(invalid_product).to be_invalid
     end
 
-    it "with invalid slug" do
+    it 'with invalid slug' do
       invalid_product.slug = nil
       expect(invalid_product).to be_invalid
     end
 
-    it "with empty slug to be invalid" do
-      invalid_product.slug = ""
+    it 'with empty slug to be invalid' do
+      invalid_product.slug = ''
       expect(invalid_product).to be_invalid
     end
 
-    it "with price greater than zero to be valid" do
+    it 'with price greater than zero to be valid' do
       invalid_product.price = 1
       expect(invalid_product).to be_valid
     end
 
-    it "with price lower than zero to be invalid" do
+    it 'with price lower than zero to be invalid' do
       invalid_product.price = -2
       expect(invalid_product).to be_invalid
     end

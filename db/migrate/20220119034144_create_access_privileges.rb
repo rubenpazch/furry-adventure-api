@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAccessPrivileges < ActiveRecord::Migration[6.1]
   def change
     create_table :access_privileges do |t|

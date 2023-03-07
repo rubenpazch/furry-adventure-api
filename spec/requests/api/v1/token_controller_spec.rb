@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe "should get JWT token", type: :request do
-  context "GET /verify" do
+require 'rails_helper'
+
+RSpec.describe 'should get JWT token', type: :request do
+  context 'GET /verify' do
     let(:valid_organization) { create(:organization) }
     let(:valid_account) { build(:account) }
     let(:valid_role) { build(:role) }
@@ -21,22 +23,22 @@ RSpec.describe "should get JWT token", type: :request do
       existing_user_valid.save!
     end
 
-    it "should get the user params" do
-      @token = "Bearer " + JsonWebToken.encode(user_id: existing_user_valid.id)
+    it 'should get the user params' do
+      @token = "Bearer #{JsonWebToken.encode(user_id: existing_user_valid.id)}"
 
       headers = {
-        "ACCEPT" => "application/json",
-        "Authorization" => @token,
+        'ACCEPT' => 'application/json',
+        'Authorization' => @token
       }
-      get "/api/v1/tokens", headers: headers
+      get '/api/v1/tokens', headers: headers
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response["username"]).not_to be_nil
-      expect(json_response["token"]).not_to be_nil
-      expect(json_response["menu"]).not_to be_nil
-      expect(json_response["account"]).not_to be_nil
-      expect(json_response["roles"]).not_to be_nil
-      expect(json_response["username"]).to eq(existing_user_valid.email)
+      expect(json_response['username']).not_to be_nil
+      expect(json_response['token']).not_to be_nil
+      expect(json_response['menu']).not_to be_nil
+      expect(json_response['account']).not_to be_nil
+      expect(json_response['roles']).not_to be_nil
+      expect(json_response['username']).to eq(existing_user_valid.email)
     end
   end
 end

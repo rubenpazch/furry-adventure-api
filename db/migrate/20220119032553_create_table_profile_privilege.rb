@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTableProfilePrivilege < ActiveRecord::Migration[6.1]
   def change
     create_table :profile_privileges, id: false do |t|

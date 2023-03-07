@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Role, type: :model do
-  context "role creation" do
+  context 'role creation' do
     let(:valid_organization) { create :organization }
     let(:valid_account) { build :account }
     let(:role_super_admin) { build :role }
@@ -18,43 +20,43 @@ RSpec.describe Role, type: :model do
       role_super_admin.is_root = true
       role_super_admin.account_id = valid_account.id
       role_super_admin.save!
-      #doctor
+      # doctor
       role_doctor.profile_id = owner.id
       role_doctor.parent_id = role_super_admin.id
       role_doctor.account_id = valid_account.id
       role_doctor.save!
-      #seller
+      # seller
       role_assistant.profile_id = seller.id
       role_assistant.parent_id = role_super_admin.id
       role_assistant.account_id = valid_account.id
       role_assistant.save!
     end
-    describe "a super admin" do
-      skip "is a root role" do
+    describe 'a super admin' do
+      skip 'is a root role' do
         expect(role_super_admin.is_root).to be_truthy
       end
 
-      skip "is a parent role" do
+      skip 'is a parent role' do
         expect(role_super_admin.parent_id).to match(0)
       end
     end
 
-    describe "a doctor" do
-      skip "has a valid role" do
+    describe 'a doctor' do
+      skip 'has a valid role' do
         expect(role_doctor.is_root).to be_falsey
       end
 
-      skip "has super admin as parent" do
+      skip 'has super admin as parent' do
         expect(role_doctor.parent_id).to eql(role_super_admin.id)
       end
     end
 
-    describe "a assisstant" do
-      skip "has a valid role" do
+    describe 'a assisstant' do
+      skip 'has a valid role' do
         expect(role_assistant.is_root).to be_falsey
       end
 
-      skip "has super admin as parent" do
+      skip 'has super admin as parent' do
         expect(role_assistant.parent_id).to eql(role_super_admin.id)
       end
     end

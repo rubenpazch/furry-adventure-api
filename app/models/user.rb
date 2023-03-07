@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   belongs_to :account
   has_one :profile
-  belongs_to :role, class_name: "Role", foreign_key: "role_id"
-  #belongs_to :person, class_name: "person", foreign_key: "person_id"
+  belongs_to :role, class_name: 'Role', foreign_key: 'role_id'
+  # belongs_to :person, class_name: "person", foreign_key: "person_id"
   validates :email, uniqueness: true
-  validates_format_of :email, with: /@/, :message => "has incorrect format"
+  validates_format_of :email, with: /@/, message: 'has incorrect format'
 
   PASSWORD_FORMAT = /\A
   (?=.{8,})          # Must contain 8 or more characters
@@ -20,12 +22,12 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   before_validation do
-    self.name = "#{self.first_name} #{self.last_name}"
+    self.name = "#{first_name} #{last_name}"
   end
 
   has_secure_password
 
-  scope :users_by_account, ->(account_id) { where("account_id = ?", account_id) }
+  scope :users_by_account, ->(account_id) { where('account_id = ?', account_id) }
 
   def is_super_admin?
     isSuperAdmin?

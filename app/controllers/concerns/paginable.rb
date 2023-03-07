@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Paginable
   protected
 
@@ -33,37 +35,37 @@ module Paginable
           links: [
             {
               active: prev_page == current_page,
-              label: "&laquo; Previous",
+              label: '&laquo; Previous',
               page: prev_page,
-              url: prev_page_url,
+              url: prev_page_url
             },
             {
               active: current_page == current_page,
-              label: "#{current_page}",
+              label: current_page.to_s,
               page: current_page,
-              url: send(links_paths, page: current_page),
+              url: send(links_paths, page: current_page)
             },
             {
               active: current_page + 1 == current_page,
-              label: "#{current_page + 1}",
+              label: (current_page + 1).to_s,
               page: current_page + 1,
-              url: send(links_paths, page: current_page + 1),
+              url: send(links_paths, page: current_page + 1)
             },
             {
               active: current_page + 2 == current_page,
-              label: "#{current_page + 2}",
+              label: (current_page + 2).to_s,
               page: current_page + 2,
-              url: send(links_paths, page: current_page + 2),
+              url: send(links_paths, page: current_page + 2)
             },
             {
               active: next_page == current_page,
-              label: "Next &raquo;",
+              label: 'Next &raquo;',
               page: next_page,
-              url: send(links_paths, page: next_page),
-            },
-          ],
-        },
-      },
+              url: send(links_paths, page: next_page)
+            }
+          ]
+        }
+      }
     }
   end
 end
